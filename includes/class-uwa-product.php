@@ -179,6 +179,16 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 		 * Get Auction Product Reserve Price
 		 *	
 		 */
+		public function get_woo_ua_auction_type($context = 'view')
+		{
+
+			return get_post_meta($this->get_woo_ua_product_id(), 'woo_ua_type_auction', true);
+		}
+
+		/**
+		 * Get Auction Product Reserve Price
+		 *	
+		 */
 		public function get_woo_ua_auction_reserved_price($context = 'view')
 		{
 
