@@ -404,6 +404,10 @@ class UWA_Admin
 				update_post_meta($post_id, 'woo_ua_lowest_price', wc_format_decimal(wc_clean($_POST['woo_ua_lowest_price'])));
 			}
 
+			if (isset($_POST['woo_ua_type_auction'])) {
+				update_post_meta($post_id, 'woo_ua_type_auction', wc_format_decimal(wc_clean($_POST['woo_ua_type_auction'])));
+			}
+
 			if (isset($_POST['woo_ua_bid_increment'])) {
 				update_post_meta($post_id, 'woo_ua_bid_increment', wc_format_decimal(wc_clean($_POST['woo_ua_bid_increment'])));
 			}
@@ -483,6 +487,7 @@ class UWA_Admin
 				delete_post_meta($post_id, "woo_ua_product_condition");
 				delete_post_meta($post_id, "woo_ua_opening_price");
 				delete_post_meta($post_id, "woo_ua_lowest_price");
+				delete_post_meta($post_id, "woo_ua_type_auction");
 				delete_post_meta($post_id, "woo_ua_bid_increment");
 				delete_post_meta($post_id, "woo_ua_auction_start_date");
 				delete_post_meta($post_id, "woo_ua_auction_end_date");

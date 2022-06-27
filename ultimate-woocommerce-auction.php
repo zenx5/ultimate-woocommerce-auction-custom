@@ -445,6 +445,10 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 								update_post_meta($translatedpost->element_id, 'woo_ua_lowest_price', $meta_values['woo_ua_lowest_price'][0]);
 							}
 
+							if (isset($meta_values['woo_ua_type_auction'][0])) {
+								update_post_meta($translatedpost->element_id, 'woo_ua_type_auction', $meta_values['woo_ua_type_auction'][0]);
+							}
+
 							if (isset($meta_values['woo_ua_bid_increment'][0])) {
 								update_post_meta($translatedpost->element_id, 'woo_ua_bid_increment', $meta_values['woo_ua_bid_increment'][0]);
 							}
