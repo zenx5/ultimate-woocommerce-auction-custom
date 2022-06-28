@@ -359,10 +359,12 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 					}
 					global $woocommerce;
 					$product_id = absint($_REQUEST['uwa-place-bid']);
-					$bid = -abs(round((int)str_replace(',', '.', $_REQUEST['uwa_bid_value']), wc_get_price_decimals()));
+					$bid = abs(round((int)str_replace(',', '.', $_REQUEST['uwa_bid_value']), wc_get_price_decimals()));
 					$was_place_bid = false;
 					$placed_bid = array();
 					$placing_bid = wc_get_product($product_id);
+					$auction_type_inc = $placing_bid->get_woo_ua_auction_type_increment() == 'up' ? 1 : -1;
+					$bid = $bid * $auction_type_inc;
 					$product_type = method_exists($placing_bid, 'get_type') ? $placing_bid->get_type() : $placing_bid->product_type;
 					$quantity = 1;
 					if ('auction' === $product_type) {
@@ -453,8 +455,8 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 								update_post_meta($translatedpost->element_id, 'woo_ua_bid_increment', $meta_values['woo_ua_bid_increment'][0]);
 							}
 
-							if (isset($meta_values['woo_ua_auction_type'][0])) {
-								update_post_meta($translatedpost->element_id, 'woo_ua_auction_type', $meta_values['woo_ua_auction_type'][0]);
+							if (isset($meta_values['woo_ua_type_auction_increment'][0])) {
+								update_post_meta($translatedpost->element_id, 'woo_ua_type_auction_increment', $meta_values['woo_ua_type_auction_increment'][0]);
 							}
 
 							if (isset($meta_values['woo_ua_auction_start_date'][0])) {

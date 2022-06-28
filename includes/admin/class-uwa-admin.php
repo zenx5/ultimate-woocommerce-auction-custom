@@ -294,10 +294,10 @@ class UWA_Admin
 				));
 
 				woocommerce_wp_select(array(
-					'id'			=> 'woo_ua_type_auction',
-					'label'			=>  __('Type Auction', 'ultimate-woocommerce-auction'),
+					'id'			=> 'woo_ua_type_auction_increment',
+					'label'			=>  __('Type Auction Increment', 'ultimate-woocommerce-auction'),
 					'desc_tip'		=> 'true',
-					'description'	=> __('Type auction.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Type Auction Increment.', 'ultimate-woocommerce-auction'),
 					'options' => array(
 						"up" => "Pujar hacia arriba",
 						"down" => "Pujar hacia abajo"
@@ -404,8 +404,8 @@ class UWA_Admin
 				update_post_meta($post_id, 'woo_ua_lowest_price', wc_format_decimal(wc_clean($_POST['woo_ua_lowest_price'])));
 			}
 
-			if (isset($_POST['woo_ua_type_auction'])) {
-				update_post_meta($post_id, 'woo_ua_type_auction', wc_format_decimal(wc_clean($_POST['woo_ua_type_auction'])));
+			if (isset($_POST['woo_ua_type_auction_increment'])) {
+				update_post_meta($post_id, 'woo_ua_type_auction_increment', sanitize_text_field($_POST['woo_ua_type_auction_increment']));
 			}
 
 			if (isset($_POST['woo_ua_bid_increment'])) {
@@ -487,7 +487,7 @@ class UWA_Admin
 				delete_post_meta($post_id, "woo_ua_product_condition");
 				delete_post_meta($post_id, "woo_ua_opening_price");
 				delete_post_meta($post_id, "woo_ua_lowest_price");
-				delete_post_meta($post_id, "woo_ua_type_auction");
+				delete_post_meta($post_id, "woo_ua_type_auction_increment");
 				delete_post_meta($post_id, "woo_ua_bid_increment");
 				delete_post_meta($post_id, "woo_ua_auction_start_date");
 				delete_post_meta($post_id, "woo_ua_auction_end_date");

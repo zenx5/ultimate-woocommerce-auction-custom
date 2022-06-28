@@ -82,7 +82,9 @@ class UWA_Bid
 			}
 		}
 
-		if ($bid > 0) {
+		if ((('down' == $product_data->get_woo_ua_auction_type_increment()) && ($bid > 0)) ||
+			(('up' == $product_data->get_woo_ua_auction_type_increment()) && ($bid <= 0))
+		) {
 			wc_add_notice(sprintf(__('Please enter a value minor than 0!', 'ultimate-woocommerce-auction'), get_permalink(wc_get_page_id('myaccount'))), 'error');
 			return false;
 		}
@@ -100,15 +102,18 @@ class UWA_Bid
 		}
 		$current_user = wp_get_current_user();
 		$auction_type = $product_data->get_woo_ua_auction_type();
-
+		$auction_type_inc = $product_data->get_woo_ua_auction_type_increment() == 'up' ? 1 : -1;
 		if ($auction_type == 'normal') {
-			if ($product_data->woo_ua_bid_value() >= ($bid)) {
+			if ((($auction_type_inc == -1) && ($product_data->woo_ua_bid_value() > ($bid))) ||
+				(($auction_type_inc == 1) && ($product_data->woo_ua_bid_value() <= ($bid)))
+			) {
+				// if ($product_data->woo_ua_bid_value() >= ($bid)) {
 
 				$curent_bid = $product_data->get_woo_ua_current_bid();
-				update_post_meta($product_id, 'woo_ua_auction_current_bid', -$bid);
+				update_post_meta($product_id, 'woo_ua_auction_current_bid', $auction_type_inc * $bid);
 				update_post_meta($product_id, 'woo_ua_auction_current_bider', $current_user->ID);
 				update_post_meta($product_id, 'woo_ua_auction_bid_count', (int)$product_data->get_woo_ua_auction_bid_count() + 1);
-				$history_bid_id = $this->history_bid($product_id, -$bid, $current_user);
+				$history_bid_id = $this->history_bid($product_id, $auction_type_inc * $bid, $current_user);
 			} else {
 
 				wc_add_notice(sprintf(__('Please enter a bid value for &quot;%s&quot; greater than the current bid. Your bid must be at least %s ', 'ultimate-woocommerce-auction'), $product_data->get_title(), wc_price($product_data->woo_ua_bid_value())), 'error');

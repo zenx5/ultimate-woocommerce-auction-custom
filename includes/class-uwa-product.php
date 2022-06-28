@@ -179,10 +179,10 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 		 * Get Auction Product Reserve Price
 		 *	
 		 */
-		public function get_woo_ua_auction_type($context = 'view')
+		public function get_woo_ua_auction_type_increment($context = 'view')
 		{
 
-			return get_post_meta($this->get_woo_ua_product_id(), 'woo_ua_type_auction', true);
+			return get_post_meta($this->get_woo_ua_product_id(), 'woo_ua_type_auction_increment', true);
 		}
 
 		/**
@@ -211,7 +211,8 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 		 */
 		public function woo_ua_bid_value()
 		{
-			$auction_bid_increment = - (($this->get_woo_ua_increase_bid_value()) ? $this->get_woo_ua_increase_bid_value() : 1);
+			$auction_type_inc = $this->get_woo_ua_auction_type_increment() == 'up' ? 1 : -1;
+			$auction_bid_increment = $auction_type_inc * (($this->get_woo_ua_increase_bid_value()) ? $this->get_woo_ua_increase_bid_value() : 1);
 
 			if (!$this->get_woo_ua_auction_current_bid()) {
 				return $this->get_woo_ua_current_bid();
@@ -256,7 +257,6 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 		 */
 		function get_woo_ua_current_bid()
 		{
-
 			if ($this->get_woo_ua_auction_current_bid()) {
 				$current_bid = ((float)$this->get_woo_ua_auction_current_bid());
 				return $current_bid;

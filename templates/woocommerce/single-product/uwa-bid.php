@@ -73,7 +73,11 @@ $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 				<!-- <label for="uwa_your_bid"><?php _e('Bid Value', 'ultimate-woocommerce-auction') ?>:</label>-->
 
 				<span class="uwa_currency"><?php echo get_woocommerce_currency_symbol(); ?></span>
-				<input type="number" name="uwa_bid_value" id="uwa_bid_value" data-auction-id="<?php echo esc_attr($product_id); ?>" value="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" min="0" max="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" step="any" size="<?php echo strlen($product->get_woo_ua_current_bid()) + 2 ?>" title="bid" class="input-text qty  bid text left">
+				<?php if ('down' == $product->get_woo_ua_auction_bid_increment()) : ?>
+					<input type="number" name="uwa_bid_value" id="uwa_bid_value" data-auction-id="<?php echo esc_attr($product_id); ?>" value="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" min="0" max="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" step="any" size="<?php echo strlen($product->get_woo_ua_current_bid()) + 2 ?>" title="bid" class="input-text qty  bid text left">
+				<?php else : ?>
+					<input type="number" name="uwa_bid_value" id="uwa_bid_value" data-auction-id="<?php echo esc_attr($product_id); ?>" value="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" min="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" step="any" size="<?php echo strlen($product->get_woo_ua_current_bid()) + 2 ?>" title="bid" class="input-text qty  bid text left">
+				<?php endif; ?>
 			</div>
 			<button type="submit" class="bid_button button alt" id="placebidbutton">
 				<?php echo apply_filters('ultimate_woocommerce_auction_bid_button_text', __('Place Bid', 'ultimate-woocommerce-auction'), $product); ?></button>
