@@ -12,7 +12,7 @@ Awesome plugin to host auctions on your WooCommerce powered site and sell your p
 
 == Description ==
 
-[Main Site](https://auctionplugin.net/) | [PRO Features](https://auctionplugin.net/features) | [Docs](https://docs.auctionplugin.net)
+[Main Site](#) | [PRO Features](#features) | [Docs](https://docs.auctionplugin.net)
 
 Ultimate Auction for WooCommerce allows easy and quick way to add your products as auctions on your site.
 Simple and flexible, Lots of features, very configurable.  Easy to setup.  Great support.

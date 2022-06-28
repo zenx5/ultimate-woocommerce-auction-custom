@@ -28,9 +28,9 @@ if (!function_exists('uwa_free_plugin_action_links')) {
 	function uwa_free_plugin_action_links($links)
 	{
 
-		$links[] = '<a href="http://auctionplugin.net/" style="color: #389e38;font-weight: bold;" target="_blank">' . __('Get Pro', 'ultimate-woocommerce-auction') . '</a>';
+		$links[] = '<a href="#" style="color: #389e38;font-weight: bold;" target="_blank">' . __('Get Pro', 'ultimate-woocommerce-auction') . '</a>';
 		$links[] = '<a href="' . admin_url('admin.php?page=uwa_general_setting') . '">' . __('Settings', 'ultimate-woocommerce-auction') . '</a>';
-		$links[] = '<a href="https://docs.auctionplugin.net/" target="_blank">' . __('Documentation', 'ultimate-woocommerce-auction') . '</a>';
+		$links[] = '<a href="#" target="_blank">' . __('Documentation', 'ultimate-woocommerce-auction') . '</a>';
 
 		return $links;
 	}
@@ -39,7 +39,7 @@ if (!function_exists('uwa_free_plugin_action_links')) {
 if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugins['woocommerce/woocommerce.php'])) {
 
 	$pro_plugin = 'ultimate-woocommerce-auction-pro/ultimate-woocommerce-auction-pro.php';
-	$free1_plugin = 'ultimate-woocommerce-auction/ultimate-woocommerce-auction.php';
+	$free1_plugin = 'ultimate-woocommerce-auction/ultimate-woocommerce-auction-custom.php';
 	if (is_plugin_active($pro_plugin)) {
 
 		add_action('admin_notices', 'uwa_custom_message');
@@ -64,7 +64,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 				define('WOO_UA_DIR', dirname(__FILE__)); // plugin dir
 			}
 			if (!defined('WOO_UA_Main_File')) {
-				define('WOO_UA_Main_File', WOO_UA_DIR . '/ultimate-woocommerce-auction.php'); // plugin dir
+				define('WOO_UA_Main_File', WOO_UA_DIR . '/ultimate-woocommerce-auction-custom.php'); // plugin dir
 			}
 			if (!defined('WOO_UA_URL')) {
 				define('WOO_UA_URL', plugin_dir_url(__FILE__)); // plugin url
@@ -203,7 +203,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 			?>
 							<div class="notice notice-info">
 								<div class="get_uwa_pro" style="display:flex;justify-content: space-evenly;">
-									<a href="https://auctionplugin.net?utm_source=woo plugin&utm_medium=admin notice&utm_campaign=learn-more-button" target="_blank"> <img src="<?php echo esc_url(WOO_UA_ASSETS_URL); ?>/images/UWCA_row.jpg" alt="" /> </a>
+									<a href="#?utm_source=woo plugin&utm_medium=admin notice&utm_campaign=learn-more-button" target="_blank"> <img src="<?php echo esc_url(WOO_UA_ASSETS_URL); ?>/images/UWCA_row.jpg" alt="" /> </a>
 									<p class="uwa_hide_free">
 										<?php
 										//printf(__('<a href="%s">Hide Notice</a>', 'ultimate-woocommerce-auction'),esc_attr(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0')));
@@ -240,7 +240,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 				public function uwa_free_plugin_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta)
 				{
 
-					$plugin_file      = basename(dirname(__FILE__)) . '/ultimate-woocommerce-auction.php';
+					$plugin_file      = basename(dirname(__FILE__)) . '/ultimate-woocommerce-auction-custom.php';
 					if (is_plugin_active_for_network($plugin_file)) {
 						switch_to_blog($blog_id);
 						$this->uwa_free_create_tables();
@@ -547,7 +547,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 				<h2><?php _e('Your Ultimate WooCommerce Auction is almost ready!', 'ultimate-woocommerce-auction'); ?></h2>
 
 				<?php
-				$plugin_file      = basename(dirname(__FILE__)) . '/ultimate-woocommerce-auction.php';
+				$plugin_file      = basename(dirname(__FILE__)) . '/ultimate-woocommerce-auction-custom.php';
 				$core_plugin_file = 'woocommerce/woocommerce.php';
 				?>
 				<a href="<?php echo wp_nonce_url('plugins.php?action=deactivate&amp;plugin=' . $plugin_file . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'deactivate-plugin_' . $plugin_file); ?>" class="notice-dismiss" style="text-decoration: none;" title="<?php _e('Dismiss this notice', 'ultimate-woocommerce-auction'); ?>"></a>
