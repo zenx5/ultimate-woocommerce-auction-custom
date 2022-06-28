@@ -257,7 +257,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 				public function uwa_free_create_tables()
 				{
 
-					//require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+					require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 					global $wpdb;
 
 					$log_table = $wpdb->prefix . "woo_ua_auction_log";

@@ -116,7 +116,7 @@ abstract class ActionScheduler_Abstract_Schema
 	 */
 	private function update_table($table)
 	{
-		//require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		$definition = $this->get_table_definition($table);
 		if ($definition) {
 			$updated = dbDelta($definition);
