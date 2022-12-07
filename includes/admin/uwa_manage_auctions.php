@@ -191,11 +191,11 @@ class Woo_Ua_Logs_List_Table extends WP_List_Table
 				$results_count = $wpdb->get_results($query_bidders_count);
 				if (count($results_count) > 2) {
 					$row['bidders'] .= "
-                            <a href='#' class='uwa-see-more show-all'  rel='" . $auction_ID . "' >" . __('See more', 'ultimate-woocommerce-auction') . '</a>';
+                            <a href='#' class='uwa-see-more show-all'  rel='" . $auction_ID . "' >" . __('See more', 'ultimate-woocommerce-auction-custom') . '</a>';
 				}
 			} else {
 
-				$row['bidders'] = __('No bids placed', 'ultimate-woocommerce-auction');
+				$row['bidders'] = __('No bids placed', 'ultimate-woocommerce-auction-custom');
 			}
 
 
@@ -218,21 +218,21 @@ class Woo_Ua_Logs_List_Table extends WP_List_Table
 	{
 		$auction_type  = isset($_REQUEST['auction_type']) ? sanitize_text_field($_REQUEST['auction_type']) : 'live';
 		$columns = array(
-			'title' => __('Auction Title', 'ultimate-woocommerce-auction'),
-			'create_date' => __('Creation Date', 'ultimate-woocommerce-auction'),
-			'ending_date' => __('Ending Date', 'ultimate-woocommerce-auction'),
-			'opening_price' => __('Starting / Current Price', 'ultimate-woocommerce-auction'),
-			'bidders' => __('Bidders Name / Bid / Time', 'ultimate-woocommerce-auction'),
+			'title' => __('Auction Title', 'ultimate-woocommerce-auction-custom'),
+			'create_date' => __('Creation Date', 'ultimate-woocommerce-auction-custom'),
+			'ending_date' => __('Ending Date', 'ultimate-woocommerce-auction-custom'),
+			'opening_price' => __('Starting / Current Price', 'ultimate-woocommerce-auction-custom'),
+			'bidders' => __('Bidders Name / Bid / Time', 'ultimate-woocommerce-auction-custom'),
 
 		);
 
 		if ($auction_type == 'expired') {
 			$columns = array(
-				'title' => __('Auction Title', 'ultimate-woocommerce-auction'),
-				'create_date' => __('Creation Date', 'ultimate-woocommerce-auction'),
-				'ending_date' => __('End Date', 'ultimate-woocommerce-auction'),
-				'opening_price' => __('Starting / Final Price', 'ultimate-woocommerce-auction'),
-				'bidders' => __('Bidders Name / Bid / Time', 'ultimate-woocommerce-auction'),
+				'title' => __('Auction Title', 'ultimate-woocommerce-auction-custom'),
+				'create_date' => __('Creation Date', 'ultimate-woocommerce-auction-custom'),
+				'ending_date' => __('End Date', 'ultimate-woocommerce-auction-custom'),
+				'opening_price' => __('Starting / Final Price', 'ultimate-woocommerce-auction-custom'),
+				'bidders' => __('Bidders Name / Bid / Time', 'ultimate-woocommerce-auction-custom'),
 
 			);
 		}
@@ -423,8 +423,8 @@ function woo_ua_list_page_handler_display()
 	<div class="wrap" id="uwa_auction_setID">
 		<div id='icon-tools' class='icon32'></br></div>
 
-		<h2 class="uwa_main_h2"><?php _e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction'); ?>
-			<span class="uwa_version_text"><?php _e('Version :', 'ultimate-woocommerce-auction'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span>
+		<h2 class="uwa_main_h2"><?php _e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction-custom'); ?>
+			<span class="uwa_version_text"><?php _e('Version :', 'ultimate-woocommerce-auction-custom'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span>
 		</h2>
 
 		<div class="get_uwa_pro">
@@ -449,10 +449,10 @@ function woo_ua_list_page_handler_display()
 							<a href="#?utm_source=woo plugin&utm_medium=admin notice&utm_campaign=learn-more-button" target="_blank"> <img src="<?php echo esc_url(WOO_UA_ASSETS_URL); ?>/images/UWCA_row.jpg" alt="" /> </a>
 							<p class="uwa_hide_free">
 								<?php
-								//printf(__('<a href="%s">Hide Notice</a>', 'ultimate-woocommerce-auction'),esc_attr(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0')));
+								//printf(__('<a href="%s">Hide Notice</a>', 'ultimate-woocommerce-auction-custom'),esc_attr(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0')));
 								?>
 							</p>
-							<a href="<?php echo esc_url(wp_nonce_url(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0'), 'ultimate-woocommerce-auction', '_ultimate-woocommerce-auction_nonce')); ?>" class="woocommerce-message-close notice-dismiss" style="position:relative;float:right;padding:9px 0px 9px 9px;text-decoration:none;"></a>
+							<a href="<?php echo esc_url(wp_nonce_url(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0'), 'ultimate-woocommerce-auction-custom', '_ultimate-woocommerce-auction_nonce')); ?>" class="woocommerce-message-close notice-dismiss" style="position:relative;float:right;padding:9px 0px 9px 9px;text-decoration:none;"></a>
 							<div class="clear"></div>
 						</div>
 					</div>
@@ -463,7 +463,7 @@ function woo_ua_list_page_handler_display()
 		</div>
 
 		<div id="uwa-auction-banner-text">
-			<?php _e('If you like <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank"> our plugin working </a> with WooCommerce, please leave us a <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank">★★★★★</a> rating. A huge thanks in advance!', 'ultimate-woocommerce-auction'); ?>
+			<?php _e('If you like <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank"> our plugin working </a> with WooCommerce, please leave us a <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank">★★★★★</a> rating. A huge thanks in advance!', 'ultimate-woocommerce-auction-custom'); ?>
 		</div>
 
 		<?php
@@ -475,13 +475,13 @@ function woo_ua_list_page_handler_display()
 		<div class="uwa-action-container" style="float:right;margin-right: 10px;">
 			<form action="" method="POST">
 				<input type="text" name="s" value="<?php echo esc_attr($search_s); ?>" />
-				<input type="submit" class="button-secondary" name="wdm_auction_search_submit" value="<?php esc_html_e('Search', 'ultimate-woocommerce-auction'); ?>" />
+				<input type="submit" class="button-secondary" name="wdm_auction_search_submit" value="<?php esc_html_e('Search', 'ultimate-woocommerce-auction-custom'); ?>" />
 			</form>
 		</div>
 
 		<ul class="subsubsub">
-			<li><a href="?page=uwa_manage_auctions&auction_type=live" class="<?php echo esc_attr($manage_setting_tab) == 'live' ? 'current' : ''; ?>"><?php _e('Live Auctions', 'ultimate-woocommerce-auction'); ?></a>|</li>
-			<li><a href="?page=uwa_manage_auctions&auction_type=expired" class="<?php echo esc_attr($manage_setting_tab) == 'expired' ? 'current' : ''; ?>"><?php _e('Expired Auctions', 'ultimate-woocommerce-auction'); ?></a></li>
+			<li><a href="?page=uwa_manage_auctions&auction_type=live" class="<?php echo esc_attr($manage_setting_tab) == 'live' ? 'current' : ''; ?>"><?php _e('Live Auctions', 'ultimate-woocommerce-auction-custom'); ?></a>|</li>
+			<li><a href="?page=uwa_manage_auctions&auction_type=expired" class="<?php echo esc_attr($manage_setting_tab) == 'expired' ? 'current' : ''; ?>"><?php _e('Expired Auctions', 'ultimate-woocommerce-auction-custom'); ?></a></li>
 
 		</ul><br class="clear">
 		<form id="persons-table" method="GET">

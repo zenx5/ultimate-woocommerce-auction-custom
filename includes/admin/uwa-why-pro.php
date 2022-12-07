@@ -14,7 +14,7 @@
 <div class="wrap" id="sec_why_upgradeID">
 	<div id='icon-tools' class='icon32'></br></div>
 
-	<h2 class="uwa_main_h2"><?php _e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction'); ?><span class="uwa_version_text"><?php _e('Version :', 'ultimate-woocommerce-auction'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span></h2>
+	<h2 class="uwa_main_h2"><?php _e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction-custom'); ?><span class="uwa_version_text"><?php _e('Version :', 'ultimate-woocommerce-auction-custom'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span></h2>
 	<section class="sec_why_upgrade">
 		<div class="wrapper">
 			<div class="why_upgrade">

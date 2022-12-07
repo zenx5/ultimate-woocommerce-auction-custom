@@ -47,7 +47,7 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 				$this->data = array_merge($this->data, $this->results_data);
 
 
-			$this->woo_ua_auction_item_condition_array = apply_filters('ultimate_woocommerce_auction_product_condition', array('new' => __('New', 'ultimate-woocommerce-auction'), 'used' => __('Used', 'ultimate-woocommerce-auction')));
+			$this->woo_ua_auction_item_condition_array = apply_filters('ultimate_woocommerce_auction_product_condition', array('new' => __('New', 'ultimate-woocommerce-auction-custom'), 'used' => __('Used', 'ultimate-woocommerce-auction-custom')));
 
 			parent::__construct($product);
 			$this->is_woo_ua_closed();
@@ -610,29 +610,29 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 
 				if ($this->get_woo_ua_auction_closed() == '3') {
 
-					$price = __('<span class="woo-ua-sold-for sold_for">Sold for</span>: ', 'ultimate-woocommerce-auction') . wc_price($this->get_price());
+					$price = __('<span class="woo-ua-sold-for sold_for">Sold for</span>: ', 'ultimate-woocommerce-auction-custom') . wc_price($this->get_price());
 				} else {
 
 					if ($this->get_woo_ua_auction_current_bid()) {
 						if ($this->is_woo_ua_reserve_met() == FALSE) {
 
-							$price = __('<span class="woo-ua-winned-for reserve_not_met">Reserve price Not met!</span> ', 'ultimate-woocommerce-auction');
+							$price = __('<span class="woo-ua-winned-for reserve_not_met">Reserve price Not met!</span> ', 'ultimate-woocommerce-auction-custom');
 						} else {
-							$price = __('<span class="woo-ua-winned-for winning_bid">Winning Bid</span>: ', 'ultimate-woocommerce-auction') . wc_price($this->get_woo_ua_auction_current_bid());
+							$price = __('<span class="woo-ua-winned-for winning_bid">Winning Bid</span>: ', 'ultimate-woocommerce-auction-custom') . wc_price($this->get_woo_ua_auction_current_bid());
 						}
 					} else {
-						$price = __('<span class="woo-ua-winned-for expired">Auction Expired</span> ', 'ultimate-woocommerce-auction');
+						$price = __('<span class="woo-ua-winned-for expired">Auction Expired</span> ', 'ultimate-woocommerce-auction-custom');
 					}
 				}
 			} elseif (!$this->is_woo_ua_started()) {
 
-				$price = '<span class="woo-ua-auction-price starting-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="">' . __('<span class="uwa-starting auction">Starting bid</span>: ', 'ultimate-woocommerce-auction') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
+				$price = '<span class="woo-ua-auction-price starting-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="">' . __('<span class="uwa-starting auction">Starting bid</span>: ', 'ultimate-woocommerce-auction-custom') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
 			} else {
 
 				if (!$this->get_woo_ua_auction_current_bid()) {
-					$price = '<span class="woo-ua-auction-price starting-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="running">' . __('<span class="woo-ua-current auction">Starting bid</span>: ', 'ultimate-woocommerce-auction') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
+					$price = '<span class="woo-ua-auction-price starting-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="running">' . __('<span class="woo-ua-current auction">Starting bid</span>: ', 'ultimate-woocommerce-auction-custom') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
 				} else {
-					$price = '<span class="woo-ua-auction-price current-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="running">' . __('<span class="woo-ua-current auction">Current bid</span>: ', 'ultimate-woocommerce-auction') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
+					$price = '<span class="woo-ua-auction-price current-bid" data-auction-id="' . $id . '" data-bid="' . $this->get_woo_ua_auction_current_bid() . '" data-status="running">' . __('<span class="woo-ua-current auction">Current bid</span>: ', 'ultimate-woocommerce-auction-custom') . wc_price($this->get_woo_ua_current_bid()) . '</span>';
 				}
 			}
 			return apply_filters('woocommerce_get_price_html', $price, $this);
@@ -721,11 +721,11 @@ if (!class_exists('WC_Product_Auction') && class_exists('WC_Product')) {
 		public function add_to_cart_text()
 		{
 			if (!$this->is_woo_ua_finished() && $this->is_woo_ua_started()) {
-				$text = __('Bid now', 'ultimate-woocommerce-auction');
+				$text = __('Bid now', 'ultimate-woocommerce-auction-custom');
 			} elseif ($this->is_woo_ua_finished()) {
-				$text = __('Expired', 'ultimate-woocommerce-auction');
+				$text = __('Expired', 'ultimate-woocommerce-auction-custom');
 			} elseif (!$this->is_woo_ua_finished() && !$this->is_woo_ua_started()) {
-				$text =  __('Pending', 'ultimate-woocommerce-auction');
+				$text =  __('Pending', 'ultimate-woocommerce-auction-custom');
 			}
 
 			return apply_filters('woocommerce_product_add_to_cart_text', $text, $this);

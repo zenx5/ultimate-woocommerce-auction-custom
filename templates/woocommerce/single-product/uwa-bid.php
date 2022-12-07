@@ -16,20 +16,20 @@ $current_user = wp_get_current_user();
 $product_id =  $product->get_id();
 $user_max_bid = $product->get_woo_ua_user_max_bid($product_id, $current_user->ID);
 $gmt_offset = get_option('gmt_offset') > 0 ? '+' . get_option('gmt_offset') : get_option('gmt_offset');
-$timezone_string = get_option('timezone_string') ? get_option('timezone_string') : __('UTC ', 'ultimate-woocommerce-auction') . $gmt_offset;
+$timezone_string = get_option('timezone_string') ? get_option('timezone_string') : __('UTC ', 'ultimate-woocommerce-auction-custom') . $gmt_offset;
 $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 ?>
 <p class="uwa_auction_condition">
 	<strong>
-		<?php _e('Item condition:', 'ultimate-woocommerce-auction'); ?>
+		<?php _e('Item condition:', 'ultimate-woocommerce-auction-custom'); ?>
 	</strong>
-	<span class="uwa_auction_current_condition"> <?php _e($product->get_woo_ua_condition(), 'ultimate-woocommerce-auction')  ?></span>
+	<span class="uwa_auction_current_condition"> <?php _e($product->get_woo_ua_condition(), 'ultimate-woocommerce-auction-custom')  ?></span>
 </p>
 <?php if (($product->is_woo_ua_closed() === FALSE) and ($product->is_woo_ua_started() === TRUE)) : ?>
 
 	<div class="uwa_auction_time" id="uwa_auction_countdown">
 		<strong>
-			<?php _e('Time Left:', 'ultimate-woocommerce-auction'); ?>
+			<?php _e('Time Left:', 'ultimate-woocommerce-auction-custom'); ?>
 		</strong>
 		<div class="uwa-main-auction-product uwa_auction_product_countdown" data-time="<?php echo esc_attr($product->get_woo_ua_remaining_seconds()) ?>" data-auction-id="<?php echo esc_attr($product_id); ?>" data-format="<?php echo esc_attr(get_option('woo_ua_auctions_countdown_format')) ?>"></div>
 	</div>
@@ -37,28 +37,28 @@ $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 	<div class='uwa_auction_product_ajax_change'>
 
 		<p class="uwa_auction_end_time">
-			<strong><?php _e('Ending On:', 'ultimate-woocommerce-auction'); ?></strong>
+			<strong><?php _e('Ending On:', 'ultimate-woocommerce-auction-custom'); ?></strong>
 			<?php echo  date_i18n(get_option('date_format'),  strtotime($product->get_woo_ua_auctions_end_time()));  ?>
 			<?php echo  date_i18n(get_option('time_format'),  strtotime($product->get_woo_ua_auctions_end_time()));  ?>
 
 		</p>
 
 		<p class="uwa_auction_product_timezone">
-			<strong><?php _e('Timezone:', 'ultimate-woocommerce-auction'); ?></strong>
+			<strong><?php _e('Timezone:', 'ultimate-woocommerce-auction-custom'); ?></strong>
 			<?php echo esc_attr($timezone_string); ?>
 		</p>
 		<div class="checkreserve">
 			<?php if (($product->is_woo_ua_reserved() === TRUE) && ($product->is_woo_ua_reserve_met() === FALSE)) { ?>
-				<?php $reserve_text = __("price has not been met.", 'ultimate-woocommerce-auction'); ?>
+				<?php $reserve_text = __("price has not been met.", 'ultimate-woocommerce-auction-custom'); ?>
 				<p class="uwa_auction_reserve_not_met">
-					<strong><?php printf(__('Reserve %s', 'ultimate-woocommerce-auction'), $reserve_text); ?></strong>
+					<strong><?php printf(__('Reserve %s', 'ultimate-woocommerce-auction-custom'), $reserve_text); ?></strong>
 				</p>
 			<?php } ?>
 
 			<?php if (($product->is_woo_ua_reserved() === TRUE) && ($product->is_woo_ua_reserve_met() === TRUE)) { ?>
-				<?php $reserve_text = __("price has been met.", 'ultimate-woocommerce-auction'); ?>
+				<?php $reserve_text = __("price has been met.", 'ultimate-woocommerce-auction-custom'); ?>
 				<p class="uwa_auction_reserve_met">
-					<strong><?php printf(__('Reserve %s', 'ultimate-woocommerce-auction'), $reserve_text); ?></strong>
+					<strong><?php printf(__('Reserve %s', 'ultimate-woocommerce-auction-custom'), $reserve_text); ?></strong>
 				</p>
 			<?php } ?>
 		</div>
@@ -68,21 +68,21 @@ $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 		<form class="uwa_auction_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo esc_attr($product_id); ?>">
 			<?php do_action('ultimate_woocommerce_auction_before_bid_button'); ?>
 			<input type="hidden" name="bid" value="<?php echo esc_attr($product_id); ?>" />
-
 			<div class="quantity buttons_added">
-				<!-- <label for="uwa_your_bid"><?php _e('Bid Value', 'ultimate-woocommerce-auction') ?>:</label>-->
+				<!-- <label for="uwa_your_bid"><?php _e('Bid Value', 'ultimate-woocommerce-auction-custom') ?>:</label>-->
 
 				<span class="uwa_currency"><?php echo get_woocommerce_currency_symbol(); ?></span>
-				<?php if ('down' == $product->get_woo_ua_auction_bid_increment()) : ?>
+				<?php if ('down' == $product->get_woo_ua_auction_type_increment()) : ?>
 					<input type="number" name="uwa_bid_value" id="uwa_bid_value" data-auction-id="<?php echo esc_attr($product_id); ?>" value="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" min="0" max="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" step="any" size="<?php echo strlen($product->get_woo_ua_current_bid()) + 2 ?>" title="bid" class="input-text qty  bid text left">
 				<?php else : ?>
 					<input type="number" name="uwa_bid_value" id="uwa_bid_value" data-auction-id="<?php echo esc_attr($product_id); ?>" value="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" min="<?php echo esc_attr($product->woo_ua_bid_value()); ?>" step="any" size="<?php echo strlen($product->get_woo_ua_current_bid()) + 2 ?>" title="bid" class="input-text qty  bid text left">
+
 				<?php endif; ?>
 			</div>
 			<button type="submit" class="bid_button button alt" id="placebidbutton">
-				<?php echo apply_filters('ultimate_woocommerce_auction_bid_button_text', __('Place Bid', 'ultimate-woocommerce-auction'), $product); ?></button>
+				<?php echo apply_filters('ultimate_woocommerce_auction_bid_button_text', __('Place Bid', 'ultimate-woocommerce-auction-custom'), $product); ?></button>
 			<div class="uwa_inc_price_hint">
-				<small class="uwa_inc_price">(<?php _e('Enter more than or equal to', 'ultimate-woocommerce-auction') ?> : </small>
+				<small class="uwa_inc_price">(<?php _e('Enter more than or equal to', 'ultimate-woocommerce-auction-custom') ?> : </small>
 				<small class="uwa_inc_latest_price uwa_inc_price_ajax_<?php echo esc_attr($product_id); ?>">
 					<?php echo wp_kses_post(wc_price($product->woo_ua_bid_value())); ?> )</small>
 			</div>
@@ -104,11 +104,11 @@ $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 
 <?php if ($product->get_woo_ua_auction_fail_reason() == '1') { ?>
 
-	<p class="expired"> <?php _e('Auction Expired because there were no bids', 'ultimate-woocommerce-auction'); ?> </p>
+	<p class="expired"> <?php _e('Auction Expired because there were no bids', 'ultimate-woocommerce-auction-custom'); ?> </p>
 
 <?php } elseif ($product->get_woo_ua_auction_fail_reason() == '2') { ?>
 
-	<p class="reserve_not_met"> <?php _e('Auction expired without reaching reserve price', 'ultimate-woocommerce-auction'); ?> </p>
+	<p class="reserve_not_met"> <?php _e('Auction expired without reaching reserve price', 'ultimate-woocommerce-auction-custom'); ?> </p>
 
 <?php } ?>
 </p>

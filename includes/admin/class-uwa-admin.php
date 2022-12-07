@@ -67,7 +67,7 @@ class UWA_Admin
 		add_action('add_meta_boxes_product', array($this, 'uwa_add_auction_metabox'));
 
 		//Auction Product Condition
-		$this->woo_ua_auction_item_condition =  array('new' => __('New', 'ultimate-woocommerce-auction'), 'used' => __('Used', 'ultimate-woocommerce-auction'));
+		$this->woo_ua_auction_item_condition =  array('new' => __('New', 'ultimate-woocommerce-auction-custom'), 'used' => __('Used', 'ultimate-woocommerce-auction-custom'));
 
 		//Emails For Admin 
 		add_filter('woocommerce_email_classes', array($this, 'uwa_register_email_classes'));
@@ -113,7 +113,7 @@ class UWA_Admin
 			$products_page_url = admin_url('edit.php?post_type=product'); ?>
 
 			<div class="notice notice-warning is-dismissible">
-				<p> <?php printf(__('You can Manage All Auctions via Products List <a href="%s" target="blank">  Click Here. </a>', 'ultimate-woocommerce-auction'), esc_url($products_page_url)); ?> </p>
+				<p> <?php printf(__('You can Manage All Auctions via Products List <a href="%s" target="blank">  Click Here. </a>', 'ultimate-woocommerce-auction-custom'), esc_url($products_page_url)); ?> </p>
 			</div>
 		<?php  	}
 	}
@@ -134,13 +134,13 @@ class UWA_Admin
 		else
 			$menu_icon = WOO_UA_ASSETS_URL . 'images/uwa_admin_menu_icon_black.png';
 
-		add_menu_page(__('Auctions', 'ultimate-woocommerce-auction'), __('Auctions', 'ultimate-woocommerce-auction'), 'manage_options', 'uwa_general_setting',  array($this, 'uwa_auction_setting_page_handler'), $menu_icon, 57.77);
+		add_menu_page(__('Auctions', 'ultimate-woocommerce-auction-custom'), __('Auctions', 'ultimate-woocommerce-auction-custom'), 'manage_options', 'uwa_general_setting',  array($this, 'uwa_auction_setting_page_handler'), $menu_icon, 57.77);
 
-		add_submenu_page('uwa_general_setting', __('Settings', 'ultimate-woocommerce-auction'), __('Settings', 'ultimate-woocommerce-auction'), 'manage_options', 'uwa_general_setting', array($this, 'uwa_auction_setting_page_handler'));
+		add_submenu_page('uwa_general_setting', __('Settings', 'ultimate-woocommerce-auction-custom'), __('Settings', 'ultimate-woocommerce-auction-custom'), 'manage_options', 'uwa_general_setting', array($this, 'uwa_auction_setting_page_handler'));
 
-		add_submenu_page('uwa_general_setting', __('Auctions', 'ultimate-woocommerce-auction'), __('Auctions', 'ultimate-woocommerce-auction'), 'manage_options', 'uwa_manage_auctions', array($this, 'uwa_manage_auction_logs_page_handler'));
+		add_submenu_page('uwa_general_setting', __('Auctions', 'ultimate-woocommerce-auction-custom'), __('Auctions', 'ultimate-woocommerce-auction-custom'), 'manage_options', 'uwa_manage_auctions', array($this, 'uwa_manage_auction_logs_page_handler'));
 
-		add_submenu_page('uwa_general_setting', __('PRO Features', 'ultimate-woocommerce-auction'), __('PRO Features', 'ultimate-woocommerce-auction'), 'manage_options', 'uwa_why_pro', array($this, 'uwa_uwa_why_pro_page_handler'));
+		add_submenu_page('uwa_general_setting', __('PRO Features', 'ultimate-woocommerce-auction-custom'), __('PRO Features', 'ultimate-woocommerce-auction-custom'), 'manage_options', 'uwa_why_pro', array($this, 'uwa_uwa_why_pro_page_handler'));
 	}
 	public function uwa_auction_setting_page_handler()
 	{
@@ -167,7 +167,7 @@ class UWA_Admin
 	public function uwa_add_auction_product($types)
 	{
 		// Key should be exactly the same as in the class
-		$types['auction'] = __('Auction Product', 'ultimate-woocommerce-auction');
+		$types['auction'] = __('Auction Product', 'ultimate-woocommerce-auction-custom');
 		return $types;
 	}
 	/**
@@ -180,7 +180,7 @@ class UWA_Admin
 	{
 		$auction_tab = array(
 			'auction_tab' => array(
-				'label'  => __('Auction', 'ultimate-woocommerce-auction'),
+				'label'  => __('Auction', 'ultimate-woocommerce-auction-custom'),
 				'target' => 'auction_options',
 				'class'  => array('show_if_auction', 'hide_if_grouped', 'hide_if_external', 'hide_if_variable', 'hide_if_simple'),
 			),
@@ -264,16 +264,16 @@ class UWA_Admin
 				woocommerce_wp_select(
 					array(
 						'id' => 'woo_ua_product_condition',
-						'label' => __('Product Condition', 'ultimate-woocommerce-auction'),
+						'label' => __('Product Condition', 'ultimate-woocommerce-auction-custom'),
 						'options' => apply_filters('ultimate_woocommerce_auction_product_condition', $this->woo_ua_auction_item_condition)
 					)
 				);
 
 				woocommerce_wp_text_input(array(
 					'id'			=> 'woo_ua_opening_price',
-					'label'			=> __('Opening Price', 'ultimate-woocommerce-auction') . ' (' . get_woocommerce_currency_symbol() . ')',
+					'label'			=> __('Opening Price', 'ultimate-woocommerce-auction-custom') . ' (' . get_woocommerce_currency_symbol() . ')',
 					'desc_tip'		=> 'true',
-					'description'	=> __('Set the price where the price of the product will start from.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Set the price where the price of the product will start from.', 'ultimate-woocommerce-auction-custom'),
 					'data_type' 			=> 'price',
 					'custom_attributes' => array(
 						'step' => 'any',
@@ -283,9 +283,9 @@ class UWA_Admin
 
 				woocommerce_wp_text_input(array(
 					'id'			=> 'woo_ua_lowest_price',
-					'label'			=>  __('Lowest Price to Accept', 'ultimate-woocommerce-auction') . ' (' . get_woocommerce_currency_symbol() . ')',
+					'label'			=>  __('Lowest Price to Accept', 'ultimate-woocommerce-auction-custom') . ' (' . get_woocommerce_currency_symbol() . ')',
 					'desc_tip'		=> 'true',
-					'description'	=> __('Set Reserve price for your auction.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Set Reserve price for your auction.', 'ultimate-woocommerce-auction-custom'),
 					'data_type' => 'price',
 					'custom_attributes' => array(
 						'step' => 'any',
@@ -295,9 +295,9 @@ class UWA_Admin
 
 				woocommerce_wp_select(array(
 					'id'			=> 'woo_ua_type_auction_increment',
-					'label'			=>  __('Type Auction Increment', 'ultimate-woocommerce-auction'),
+					'label'			=>  __('Type Auction Increment', 'ultimate-woocommerce-auction-custom'),
 					'desc_tip'		=> 'true',
-					'description'	=> __('Type Auction Increment.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Type Auction Increment.', 'ultimate-woocommerce-auction-custom'),
 					'options' => array(
 						"up" => "Pujar hacia arriba",
 						"down" => "Pujar hacia abajo"
@@ -318,9 +318,9 @@ class UWA_Admin
 
 				woocommerce_wp_text_input(array(
 					'id'			=> 'woo_ua_bid_increment',
-					'label'			=> __('Bid Increment', 'ultimate-woocommerce-auction') . ' (' . get_woocommerce_currency_symbol() . ')',
+					'label'			=> __('Bid Increment', 'ultimate-woocommerce-auction-custom') . ' (' . get_woocommerce_currency_symbol() . ')',
 					'desc_tip'		=> 'true',
-					'description'	=> __('Set an amount from which next bid should start.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Set an amount from which next bid should start.', 'ultimate-woocommerce-auction-custom'),
 					'data_type' => 'price',
 					'value' => $bid_inc_val,
 					'custom_attributes' => array(
@@ -331,10 +331,10 @@ class UWA_Admin
 
 				woocommerce_wp_text_input(array(
 					'id'			=> '_regular_price',
-					'label'			=> __('Buy now price', 'ultimate-woocommerce-auction') . ' (' . get_woocommerce_currency_symbol() . ')',
+					'label'			=> __('Buy now price', 'ultimate-woocommerce-auction-custom') . ' (' . get_woocommerce_currency_symbol() . ')',
 					'desc_tip'		=> 'true',
 					'data_type' => 'price',
-					'description'	=> __('Visitors can buy your auction by making payments via Available payment method.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Visitors can buy your auction by making payments via Available payment method.', 'ultimate-woocommerce-auction-custom'),
 				));
 
 
@@ -347,9 +347,9 @@ class UWA_Admin
 				}
 				woocommerce_wp_text_input(array(
 					'id'			=> 'woo_ua_auction_end_date',
-					'label'			=> __('Ending Date', 'ultimate-woocommerce-auction'),
+					'label'			=> __('Ending Date', 'ultimate-woocommerce-auction-custom'),
 					'desc_tip'		=> 'true',
-					'description'	=> __('Set the end date of Auction Product.', 'ultimate-woocommerce-auction'),
+					'description'	=> __('Set the end date of Auction Product.', 'ultimate-woocommerce-auction-custom'),
 					'type' 			=> 'text',
 					'class'         => 'datetimepicker',
 					'value'         => $end_date,
@@ -358,8 +358,8 @@ class UWA_Admin
 				?>
 				<div class="uwa_admin_current_time">
 					<?php
-					printf(__('Current Blog Time is %s', 'ultimate-woocommerce-auction'), '<strong>' . get_uwa_now_date() . '</strong> ');
-					printf(__('Timezone: %s', 'ultimate-woocommerce-auction'), '<strong>' . wp_timezone_string() . '</strong> ');
+					printf(__('Current Blog Time is %s', 'ultimate-woocommerce-auction-custom'), '<strong>' . get_uwa_now_date() . '</strong> ');
+					printf(__('Timezone: %s', 'ultimate-woocommerce-auction-custom'), '<strong>' . wp_timezone_string() . '</strong> ');
 					echo sprintf(__("%sChange.%s", "ultimate-woocommerce-auction"), '<a href="' . esc_url(admin_url('options-general.php?#timezone_string')) . '" target="_blank">', '</a>'); ?>
 				</div>
 			</div>
@@ -540,7 +540,7 @@ class UWA_Admin
 
 		add_meta_box(
 			'uwa-auction-log',
-			__('Bids History', 'ultimate-woocommerce-auction'),
+			__('Bids History', 'ultimate-woocommerce-auction-custom'),
 			array($this, 'uwa_render_auction_log'),
 			'product',
 			'normal',
@@ -560,37 +560,37 @@ class UWA_Admin
 
 		<?php if (($product_data->is_woo_ua_closed() === TRUE) and ($product_data->is_woo_ua_started() === TRUE)) : ?>
 
-			<p><?php _e('Auction has expired', 'ultimate-woocommerce-auction') ?></p>
+			<p><?php _e('Auction has expired', 'ultimate-woocommerce-auction-custom') ?></p>
 
 			<?php if ($product_data->get_woo_ua_auction_fail_reason() == '1') { ?>
 
-				<p><?php _e('Auction Expired without any bids.', 'ultimate-woocommerce-auction') ?></p>
+				<p><?php _e('Auction Expired without any bids.', 'ultimate-woocommerce-auction-custom') ?></p>
 
 			<?php } elseif ($product_data->get_woo_ua_auction_fail_reason() == '2') { ?>
 
-				<p><?php _e('Auction Expired without reserve price met', 'ultimate-woocommerce-auction') ?></p>
+				<p><?php _e('Auction Expired without reserve price met', 'ultimate-woocommerce-auction-custom') ?></p>
 
 			<?php }
 
 			if ($product_data->get_woo_ua_auction_closed() == '3') { ?>
 
-				<p><?php _e('This Auction Product has been sold for buy now price', 'ultimate-woocommerce-auction') ?>: <span>
+				<p><?php _e('This Auction Product has been sold for buy now price', 'ultimate-woocommerce-auction-custom') ?>: <span>
 						<?php echo wp_kses_post(wc_price($product_data->get_regular_price())); ?></span></p>
 
 			<?php } elseif ($product_data->get_woo_ua_auction_current_bider()) { ?>
 
-				<p><?php _e('Highest bidder was', 'ultimate-woocommerce-auction') ?>: <span class="maxbider">
+				<p><?php _e('Highest bidder was', 'ultimate-woocommerce-auction-custom') ?>: <span class="maxbider">
 						<a href='<?php echo esc_url(get_edit_user_link($product_data->get_woo_ua_auction_current_bider())); ?>'>
 							<?php echo esc_attr(get_userdata($product_data->get_woo_ua_auction_current_bider())->display_name); ?></a>
 					</span>
 				</p>
 
-				<p><?php _e('Highest bid was', 'ultimate-woocommerce-auction') ?>: <span class="maxbid">
+				<p><?php _e('Highest bid was', 'ultimate-woocommerce-auction-custom') ?>: <span class="maxbid">
 						<?php echo wp_kses_post(wc_price($product_data->get_woo_ua_current_bid())); ?></span></p>
 
 				<?php if ($product_data->get_woo_ua_auction_payed()) { ?>
 
-					<p><?php _e('Order has been paid, order ID is', 'ultimate-woocommerce-auction') ?>: <span>
+					<p><?php _e('Order has been paid, order ID is', 'ultimate-woocommerce-auction-custom') ?>: <span>
 							<a href='post.php?&action=edit&post=<?php echo esc_attr($product_data->get_woo_ua_order_id()); ?>'>
 								<?php echo esc_attr($product_data->get_woo_ua_order_id()); ?></a></span></p>
 
@@ -598,8 +598,8 @@ class UWA_Admin
 
 					$order = wc_get_order($product_data->get_woo_ua_order_id());
 					if ($order) {
-						$order_status = $order->get_status() ? $order->get_status() : __('unknown', 'ultimate-woocommerce-auction'); ?>
-						<p><?php _e('Order has been made, order status is', 'ultimate-woocommerce-auction') ?>:
+						$order_status = $order->get_status() ? $order->get_status() : __('unknown', 'ultimate-woocommerce-auction-custom'); ?>
+						<p><?php _e('Order has been made, order status is', 'ultimate-woocommerce-auction-custom') ?>:
 							<a href='post.php?&action=edit&post=<?php echo esc_attr($product_data->get_woo_ua_order_id()); ?>'>
 								<?php echo esc_attr($order_status); ?></a><span>
 						<?php }
@@ -614,7 +614,7 @@ class UWA_Admin
 
 				<?php endif; ?>
 				<?php
-				$heading = apply_filters('ultimate_woocommerce_auction_total_bids_heading', __('Total Bids Placed:', 'ultimate-woocommerce-auction'));
+				$heading = apply_filters('ultimate_woocommerce_auction_total_bids_heading', __('Total Bids Placed:', 'ultimate-woocommerce-auction-custom'));
 				?>
 				<h2><?php echo esc_attr($heading); ?></h2>
 
@@ -628,10 +628,10 @@ class UWA_Admin
 							if (!empty($woo_ua_auction_history)) : ?>
 
 								<tr>
-									<th><?php _e('Bidder Name', 'ultimate-woocommerce-auction') ?></th>
-									<th><?php _e('Bidding Time', 'ultimate-woocommerce-auction') ?></th>
-									<th><?php _e('Bid', 'ultimate-woocommerce-auction') ?></th>
-									<th class="actions"><?php _e('Actions', 'ultimate-woocommerce-auction') ?></th>
+									<th><?php _e('Bidder Name', 'ultimate-woocommerce-auction-custom') ?></th>
+									<th><?php _e('Bidding Time', 'ultimate-woocommerce-auction-custom') ?></th>
+									<th><?php _e('Bid', 'ultimate-woocommerce-auction-custom') ?></th>
+									<th class="actions"><?php _e('Actions', 'ultimate-woocommerce-auction-custom') ?></th>
 								</tr>
 								<?php foreach ($woo_ua_auction_history as $history_value) { ?>
 
@@ -641,7 +641,7 @@ class UWA_Admin
 										<td class="bid_date"><?php echo esc_attr(mysql2date($datetimeformat, $history_value->date)) ?></td>
 										<td class="bid_price"><?php echo wp_kses_post(wc_price($history_value->bid)); ?></td>
 										<td class="bid_action">
-											<a href='#' data-id=<?php echo esc_attr($history_value->id); ?> data-postid=<?php echo esc_attr($post->ID); ?>><?php _e('Delete', 'ultimate-woocommerce-auction') ?></a>
+											<a href='#' data-id=<?php echo esc_attr($history_value->id); ?> data-postid=<?php echo esc_attr($post->ID); ?>><?php _e('Delete', 'ultimate-woocommerce-auction-custom') ?></a>
 										</td>
 									</tr>
 								<?php } ?>
@@ -650,9 +650,9 @@ class UWA_Admin
 								<?php
 								$start_date = $product_data->get_woo_ua_auction_start_time(); ?>
 								<?php if ($product_data->is_woo_ua_started() === TRUE) { ?>
-									<td class="started"><?php _e('Auction started', 'ultimate-woocommerce-auction'); ?>
+									<td class="started"><?php _e('Auction started', 'ultimate-woocommerce-auction-custom'); ?>
 									<?php } else { ?>
-									<td class="started"><?php _e('Auction starting', 'ultimate-woocommerce-auction'); ?>
+									<td class="started"><?php _e('Auction starting', 'ultimate-woocommerce-auction-custom'); ?>
 									<?php } ?></td>
 									<td colspan="3" class="bid_date"><?php echo esc_attr(mysql2date($datetimeformat, $start_date)) ?></td>
 							</tr>
@@ -746,7 +746,7 @@ class UWA_Admin
 					);
 				?>
 					<select name="uwa_filter">
-						<option value=""><?php _e('Auction filter By ', 'ultimate-woocommerce-auction'); ?></option>
+						<option value=""><?php _e('Auction filter By ', 'ultimate-woocommerce-auction-custom'); ?></option>
 						<?php
 						$current_filter = isset($_GET['uwa_filter']) ? sanitize_text_field($_GET['uwa_filter']) : '';
 						foreach ($filter_values as $label => $value) {
@@ -1009,20 +1009,20 @@ class UWA_Admin
 								update_post_meta($postid_id, 'woo_ua_auction_bid_count', intval($product_data->get_woo_ua_auction_bid_count() - 1));
 								do_action('ultimate_woocommerce_auction_delete_bid', array('product_id' => $postid_id, 'delete_user_id' => $log->userid, 'new_max_bider_id ' => $new_max_bider_id));
 								$response['status'] = 1;
-								$response['success_message'] = __('Bid Deleted Successfully', 'ultimate-woocommerce-auction');
+								$response['success_message'] = __('Bid Deleted Successfully', 'ultimate-woocommerce-auction-custom');
 							} else {
 								$wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "woo_ua_auction_log WHERE id= %d", absint($_POST["logid"])));
 								update_post_meta($postid_id, 'woo_ua_auction_bid_count', intval($product_data->get_woo_ua_auction_bid_count() - 1));
 								$wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "woo_ua_auction_log WHERE id= %d", absint($_POST["logid"])));
 								$response['status'] = 1;
-								$response['success_message'] = __('Bid Deleted Successfully', 'ultimate-woocommerce-auction');
+								$response['success_message'] = __('Bid Deleted Successfully', 'ultimate-woocommerce-auction-custom');
 							}
 						}
 					}
 				} else {
 
 					$response['status'] = 0;
-					$response['error_message'] = __('Bid Not Deleted', 'ultimate-woocommerce-auction');
+					$response['error_message'] = __('Bid Not Deleted', 'ultimate-woocommerce-auction-custom');
 				}
 
 				echo json_encode($response);
@@ -1078,7 +1078,7 @@ class UWA_Admin
 			{
 
 				// I want to display Brand column just after the product name column
-				$auction_status_columns = __('Auction Status', 'ultimate-woocommerce-auction');
+				$auction_status_columns = __('Auction Status', 'ultimate-woocommerce-auction-custom');
 				return array_slice($columns_array, 0, 5, true)
 					+ array('admin_auction_status' => $auction_status_columns)
 					+ array_slice($columns_array, 5, NULL, true);
@@ -1094,9 +1094,9 @@ class UWA_Admin
 						$closed = $product_data->is_woo_ua_closed();
 						$failed = $product_data->get_woo_ua_auction_fail_reason();
 						if ($closed === TRUE) { ?>
-							<span style="color:red;font-size:20px"><?php _e('Expired', 'ultimate-woocommerce-auction') ?></span>
+							<span style="color:red;font-size:20px"><?php _e('Expired', 'ultimate-woocommerce-auction-custom') ?></span>
 						<?php } else { ?>
-							<span style="color:green;font-size:20px"><?php _e('Live', 'ultimate-woocommerce-auction') ?></span>
+							<span style="color:green;font-size:20px"><?php _e('Live', 'ultimate-woocommerce-auction-custom') ?></span>
 				<?php }
 					}
 				}

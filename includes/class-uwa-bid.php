@@ -59,7 +59,7 @@ class UWA_Bid
 
 		if (!is_user_logged_in()) {
 
-			wc_add_notice(sprintf(__('Please Login/Register in to place your bid or buy the product. <a href="%s" target="_blank" class="button">Login/Register &rarr;</a>', 'ultimate-woocommerce-auction'), get_permalink(wc_get_page_id('myaccount'))), 'error');
+			wc_add_notice(sprintf(__('Please Login/Register in to place your bid or buy the product. <a href="%s" target="_blank" class="button">Login/Register &rarr;</a>', 'ultimate-woocommerce-auction-custom'), get_permalink(wc_get_page_id('myaccount'))), 'error');
 			return false;
 		}
 
@@ -71,12 +71,12 @@ class UWA_Bid
 			/* for administrator role only */
 			if (current_user_can('administrator')) {
 				if ($uwa_allow_admin_to_bid == "no" && $current_user->ID == $post_author) {
-					wc_add_notice(sprintf(__('Sorry, you can not bid on your own auction product.', 'ultimate-woocommerce-auction')), 'error');
+					wc_add_notice(sprintf(__('Sorry, you can not bid on your own auction product.', 'ultimate-woocommerce-auction-custom')), 'error');
 					return false;
 				}
 			} else { /* for seller/vendor/other role  */
 				if ($uwa_allow_owner_to_bid == "no" && $current_user->ID == $post_author) {
-					wc_add_notice(sprintf(__('Sorry, you can not bid on your own auction product.', 'ultimate-woocommerce-auction')), 'error');
+					wc_add_notice(sprintf(__('Sorry, you can not bid on your own auction product.', 'ultimate-woocommerce-auction-custom')), 'error');
 					return false;
 				}
 			}
@@ -85,19 +85,19 @@ class UWA_Bid
 		if ((('down' == $product_data->get_woo_ua_auction_type_increment()) && ($bid > 0)) ||
 			(('up' == $product_data->get_woo_ua_auction_type_increment()) && ($bid <= 0))
 		) {
-			wc_add_notice(sprintf(__('Please enter a value minor than 0!', 'ultimate-woocommerce-auction'), get_permalink(wc_get_page_id('myaccount'))), 'error');
+			wc_add_notice(sprintf(__('Please enter a value minor than 0!', 'ultimate-woocommerce-auction-custom'), get_permalink(wc_get_page_id('myaccount'))), 'error');
 			return false;
 		}
 
 
 		// Check if auction product expired
 		if ($product_data->is_woo_ua_closed()) {
-			wc_add_notice(sprintf(__('This auction &quot;%s&quot; has expired', 'ultimate-woocommerce-auction'), $product_data->get_title()), 'error');
+			wc_add_notice(sprintf(__('This auction &quot;%s&quot; has expired', 'ultimate-woocommerce-auction-custom'), $product_data->get_title()), 'error');
 			return false;
 		}
 		// Check Stock
 		if (!$product_data->is_in_stock()) {
-			wc_add_notice(sprintf(__('You cannot place a bid for &quot;%s&quot; because the product is out of stock.', 'ultimate-woocommerce-auction'), $product_data->get_title()), 'error');
+			wc_add_notice(sprintf(__('You cannot place a bid for &quot;%s&quot; because the product is out of stock.', 'ultimate-woocommerce-auction-custom'), $product_data->get_title()), 'error');
 			return false;
 		}
 		$current_user = wp_get_current_user();
@@ -116,11 +116,11 @@ class UWA_Bid
 				$history_bid_id = $this->history_bid($product_id, $auction_type_inc * $bid, $current_user);
 			} else {
 
-				wc_add_notice(sprintf(__('Please enter a bid value for &quot;%s&quot; greater than the current bid. Your bid must be at least %s ', 'ultimate-woocommerce-auction'), $product_data->get_title(), wc_price($product_data->woo_ua_bid_value())), 'error');
+				wc_add_notice(sprintf(__('Please enter a bid value for &quot;%s&quot; greater than the current bid. Your bid must be at least %s ', 'ultimate-woocommerce-auction-custom'), $product_data->get_title(), wc_price($product_data->woo_ua_bid_value())), 'error');
 				return false;
 			}
 		} else {
-			wc_add_notice(sprintf(__('There was no bid Placed', 'ultimate-woocommerce-auction'), $product_data->get_title()), 'error');
+			wc_add_notice(sprintf(__('There was no bid Placed', 'ultimate-woocommerce-auction-custom'), $product_data->get_title()), 'error');
 			return false;
 		}
 		do_action('ultimate_woocommerce_auction_place_bid', array('product_id' => $product_id, 'log_id' => $history_bid_id));

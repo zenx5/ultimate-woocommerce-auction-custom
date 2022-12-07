@@ -125,7 +125,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 <div class="wrap" id="uwa_auction_setID">
 	<div id='icon-tools' class='icon32'></br></div>
 
-	<h2 class="uwa_main_h2"><?php esc_html_e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction'); ?><span class="uwa_version_text"><?php esc_html_e('Version :', 'ultimate-woocommerce-auction'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span></h2>
+	<h2 class="uwa_main_h2"><?php esc_html_e('Ultimate Auction for WooCommerce', 'ultimate-woocommerce-auction-custom'); ?><span class="uwa_version_text"><?php esc_html_e('Version :', 'ultimate-woocommerce-auction-custom'); ?> <?php echo esc_attr(WOO_UA_VERSION); ?></span></h2>
 
 	<div class="get_uwa_pro">
 
@@ -149,10 +149,10 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 						<a href="https://auctionplugin.net?utm_source=woo plugin&utm_medium=admin notice&utm_campaign=learn-more-button" target="_blank"> <img src="<?php echo esc_url(WOO_UA_ASSETS_URL); ?>/images/UWCA_row.jpg" alt="" /> </a>
 						<p class="uwa_hide_free">
 							<?php
-							//printf(__('<a href="%s">Hide Notice</a>', 'ultimate-woocommerce-auction'),esc_attr(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0')));
+							//printf(__('<a href="%s">Hide Notice</a>', 'ultimate-woocommerce-auction-custom'),esc_attr(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0')));
 							?>
 						</p>
-						<a href="<?php echo esc_url(wp_nonce_url(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0'), 'ultimate-woocommerce-auction', '_ultimate-woocommerce-auction_nonce')); ?>" class="woocommerce-message-close notice-dismiss" style="position:relative;float:right;padding:9px 0px 9px 9px;text-decoration:none;"></a>
+						<a href="<?php echo esc_url(wp_nonce_url(add_query_arg('uwa_pro_add_plugin_notice_ignore', '0'), 'ultimate-woocommerce-auction-custom', '_ultimate-woocommerce-auction_nonce')); ?>" class="woocommerce-message-close notice-dismiss" style="position:relative;float:right;padding:9px 0px 9px 9px;text-decoration:none;"></a>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -164,13 +164,13 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 
 	<div id="uwa-auction-banner-text">
-		<?php esc_html__('If you like <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank"> our plugin working </a> with WooCommerce, please leave us a <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank">★★★★★</a> rating. A huge thanks in advance!', 'ultimate-woocommerce-auction'); ?>
+		<?php esc_html__('If you like <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank"> our plugin working </a> with WooCommerce, please leave us a <a href="https://wordpress.org/support/plugin/ultimate-woocommerce-auction/reviews?rate=5#new-post" target="_blank">★★★★★</a> rating. A huge thanks in advance!', 'ultimate-woocommerce-auction-custom'); ?>
 	</div>
 	<div class="uwa_setting_right">
 
 		<div class="box_like_plugin">
 			<div class="like_plugin">
-				<h2 class="title_uwa_setting"><?php esc_html_e('Like this plugin?', 'ultimate-woocommerce-auction'); ?></h2>
+				<h2 class="title_uwa_setting"><?php esc_html_e('Like this plugin?', 'ultimate-woocommerce-auction-custom'); ?></h2>
 				<div class="text_uwa_setting">
 					<div class="star_rating">
 						<form class="rating">
@@ -234,7 +234,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 									<tbody>
 										<tr>
 											<th scope="row">
-												<h2><?php esc_html_e('Auction Settings', 'ultimate-woocommerce-auction'); ?></h2>
+												<h2><?php esc_html_e('Auction Settings', 'ultimate-woocommerce-auction-custom'); ?></h2>
 
 											</th>
 
@@ -243,14 +243,14 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 										<tr>
 										<tr>
 											<th scope="row">
-												<label for="uwa_cron_status_in"><?php esc_html_e('Check Auction Status:', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_cron_status_in"><?php esc_html_e('Check Auction Status:', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 											<td>
-												<?php esc_html_e('In every', 'ultimate-woocommerce-auction'); ?>
-												<input type="number" name="uwa_cron_status_in" class="regular-number" min="1" id="uwa_cron_status_in" value="<?php echo esc_attr($uwa_cron_status_in); ?>"><?php esc_html_e('Minutes.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('In every', 'ultimate-woocommerce-auction-custom'); ?>
+												<input type="number" name="uwa_cron_status_in" class="regular-number" min="1" id="uwa_cron_status_in" value="<?php echo esc_attr($uwa_cron_status_in); ?>"><?php esc_html_e('Minutes.', 'ultimate-woocommerce-auction-custom'); ?>
 												</br>
 												<div class="uwa-auction-settings-tip">
-													<?php esc_html_e('A scheduler runs on an interval specified in this field in recurring manner.It checks, if some live auctions product can be expired and accordingly update their status.', 'ultimate-woocommerce-auction');
+													<?php esc_html_e('A scheduler runs on an interval specified in this field in recurring manner.It checks, if some live auctions product can be expired and accordingly update their status.', 'ultimate-woocommerce-auction-custom');
 													?>
 												</div>
 											</td>
@@ -258,27 +258,27 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 										<tr>
 											<th scope="row">
-												<label for="uwa_cron_status_number"><?php esc_html_e('Auctions Processed Simultaneously:', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_cron_status_number"><?php esc_html_e('Auctions Processed Simultaneously:', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 
 											<td>
-												<?php esc_html_e('Process ', 'ultimate-woocommerce-auction'); ?>
-												<input type="number" name="uwa_cron_status_number" class="regular-number" min="1" id="uwa_cron_status_number" value="<?php echo esc_attr($uwa_cron_status_number); ?>"><?php esc_html_e('auctions per request.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('Process ', 'ultimate-woocommerce-auction-custom'); ?>
+												<input type="number" name="uwa_cron_status_number" class="regular-number" min="1" id="uwa_cron_status_number" value="<?php echo esc_attr($uwa_cron_status_number); ?>"><?php esc_html_e('auctions per request.', 'ultimate-woocommerce-auction-custom'); ?>
 												</br>
 												<div class="uwa-auction-settings-tip">
-													<?php esc_html_e('Number of auctions products Process per request.The scheduler processes the specified no. auctions whenever a schedule occurs.', 'ultimate-woocommerce-auction');
+													<?php esc_html_e('Number of auctions products Process per request.The scheduler processes the specified no. auctions whenever a schedule occurs.', 'ultimate-woocommerce-auction-custom');
 													?>
 
 													<a href="" class="uwa_fields_tooltip" onclick="return false"><strong>?</strong>
-														<span style="width: 500px; margin-left: -375px;">* <strong><?php esc_html_e('Note :', 'ultimate-woocommerce-auction'); ?><strong>
+														<span style="width: 500px; margin-left: -375px;">* <strong><?php esc_html_e('Note :', 'ultimate-woocommerce-auction-custom'); ?><strong>
 																	<ol>
-																		<li><?php esc_html_e('It is recommended to fill the above values in a balanced manner based upon the traffic, no. of auction products and no. of users on your site.', 'ultimate-woocommerce-auction'); ?>
+																		<li><?php esc_html_e('It is recommended to fill the above values in a balanced manner based upon the traffic, no. of auction products and no. of users on your site.', 'ultimate-woocommerce-auction-custom'); ?>
 																		</li>
-																		<li><?php esc_html_e('The less is the no. of auctions per request (fields 2 and 4 from above), the processing will be more optimized. If you are allowing so many auctions to be processed in each request, it can affect your site performance.', 'ultimate-woocommerce-auction'); ?>
+																		<li><?php esc_html_e('The less is the no. of auctions per request (fields 2 and 4 from above), the processing will be more optimized. If you are allowing so many auctions to be processed in each request, it can affect your site performance.', 'ultimate-woocommerce-auction-custom'); ?>
 																		</li>
-																		<li><?php esc_html_e('Similarly, you should also not set a very few no. of auction products since there may be delayed in expiry of some auction products and/or email notifications.', 'ultimate-woocommerce-auction'); ?>
+																		<li><?php esc_html_e('Similarly, you should also not set a very few no. of auction products since there may be delayed in expiry of some auction products and/or email notifications.', 'ultimate-woocommerce-auction-custom'); ?>
 																		</li>
-																		<li><?php esc_html_e('It is recommended not to keep on changing these values frequently as your auction products will be rescheduled every time you update the values.', 'ultimate-woocommerce-auction'); ?>
+																		<li><?php esc_html_e('It is recommended not to keep on changing these values frequently as your auction products will be rescheduled every time you update the values.', 'ultimate-woocommerce-auction-custom'); ?>
 																		</li>
 																	</ol>
 														</span></a>
@@ -290,13 +290,13 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 										<tr>
 										<tr>
 											<th scope="row">
-												<label for="uwa_bid_ajax_enable"><?php esc_html_e('Bidding Information:', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_bid_ajax_enable"><?php esc_html_e('Bidding Information:', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 											<td>
-												<input type="checkbox" <?php checked($ajax_enable, 'yes'); ?> name="uwa_bid_ajax_enable" class="regular-number" id="uwa_bid_ajax_enable" value="yes"><?php esc_html_e('Enable Ajax update for latest bidding.', 'ultimate-woocommerce-auction'); ?>
+												<input type="checkbox" <?php checked($ajax_enable, 'yes'); ?> name="uwa_bid_ajax_enable" class="regular-number" id="uwa_bid_ajax_enable" value="yes"><?php esc_html_e('Enable Ajax update for latest bidding.', 'ultimate-woocommerce-auction-custom'); ?>
 												</br>
 												<div class="uwa-auction-settings-tip">
-													<?php esc_html_e('Enables/disables ajax current bid checker (refresher) for auction - updates current bid value without refreshing page (increases server load, disable for best performance)', 'ultimate-woocommerce-auction');
+													<?php esc_html_e('Enables/disables ajax current bid checker (refresher) for auction - updates current bid value without refreshing page (increases server load, disable for best performance)', 'ultimate-woocommerce-auction-custom');
 													?>
 												</div>
 											</td>
@@ -304,15 +304,15 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 										<tr>
 											<th scope="row">
-												<label for="uwa_bid_ajax_interval"><?php esc_html_e('Check Bidding Info:', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_bid_ajax_interval"><?php esc_html_e('Check Bidding Info:', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 
 											<td>
-												<?php esc_html_e('In every', 'ultimate-woocommerce-auction'); ?>
-												<input type="number" name="uwa_bid_ajax_interval" class="regular-number" min="1" id="uwa_bid_ajax_interval" value="<?php echo esc_attr($uwa_bid_ajax_interval); ?>"><?php esc_html_e('Second.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('In every', 'ultimate-woocommerce-auction-custom'); ?>
+												<input type="number" name="uwa_bid_ajax_interval" class="regular-number" min="1" id="uwa_bid_ajax_interval" value="<?php echo esc_attr($uwa_bid_ajax_interval); ?>"><?php esc_html_e('Second.', 'ultimate-woocommerce-auction-custom'); ?>
 												</br>
 												<div class="uwa-auction-settings-tip">
-													<?php esc_html_e('Time interval between two ajax requests in seconds (bigger intervals means less load for server)', 'ultimate-woocommerce-auction');
+													<?php esc_html_e('Time interval between two ajax requests in seconds (bigger intervals means less load for server)', 'ultimate-woocommerce-auction-custom');
 													?>
 												</div>
 											</td>
@@ -322,11 +322,11 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 										<tr>
 											<th scope="row">
-												<label for="uwa_bid_ajax_interval"><?php esc_html_e('Bidding Restriction:', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_bid_ajax_interval"><?php esc_html_e('Bidding Restriction:', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 											<td class="uwaforminp">
 												<input type="checkbox" <?php checked($admin_bid_enable, 'yes'); ?> name="uwa_allow_admin_to_bid" id="uwa_allow_admin_to_bid" value="yes">
-												<?php esc_html_e('Allow Administrator to bid on their own auction.', 'ultimate-woocommerce-auction');  ?>
+												<?php esc_html_e('Allow Administrator to bid on their own auction.', 'ultimate-woocommerce-auction-custom');  ?>
 											</td>
 										</tr>
 
@@ -334,7 +334,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 											<th></th>
 											<td class="uwaforminp">
 												<input type="checkbox" <?php checked($owner_bid_enable, 'yes'); ?> name="uwa_allow_owner_to_bid" id="uwa_allow_owner_to_bid" value="yes">
-												<?php esc_html_e('Allow Auction Owner (Seller/Vendor) to bid on their own auction.', 'ultimate-woocommerce-auction');  ?>
+												<?php esc_html_e('Allow Auction Owner (Seller/Vendor) to bid on their own auction.', 'ultimate-woocommerce-auction-custom');  ?>
 											</td>
 										</tr>
 
@@ -343,34 +343,34 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 										<tr>
 											<td colspan="2">
-												<h2 class="uwa_section_tr"><?php esc_html_e('Shop Page', 'ultimate-woocommerce-auction'); ?></h2>
-												<span style='vertical-align: top;'><?php esc_html_e('The following options affect on frontend Shop Page.', 'ultimate-woocommerce-auction'); ?></span>
+												<h2 class="uwa_section_tr"><?php esc_html_e('Shop Page', 'ultimate-woocommerce-auction-custom'); ?></h2>
+												<span style='vertical-align: top;'><?php esc_html_e('The following options affect on frontend Shop Page.', 'ultimate-woocommerce-auction-custom'); ?></span>
 											</td>
 
 										</tr>
 
 										<tr>
-											<th scope="row"><?php esc_html_e('Auctions Display:', 'ultimate-woocommerce-auction'); ?></th>
+											<th scope="row"><?php esc_html_e('Auctions Display:', 'ultimate-woocommerce-auction-custom'); ?></th>
 
 											<td>
 												<input <?php checked($expired_enable, 'yes'); ?> value="yes" name="uwa_expired_enabled" type="checkbox">
-												<?php esc_html_e('Show Expired Auctions.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('Show Expired Auctions.', 'ultimate-woocommerce-auction-custom'); ?>
 											</td>
 										</tr>
 
 
 										<tr>
-											<th scope="row"><?php esc_html_e('Show Auctions on:', 'ultimate-woocommerce-auction'); ?></th>
+											<th scope="row"><?php esc_html_e('Show Auctions on:', 'ultimate-woocommerce-auction-custom'); ?></th>
 											<td>
 												<input <?php checked($shop_enable, 'yes'); ?> value="yes" name="uwa_shop_enabled" type="checkbox">
-												<?php esc_html_e('On Shop Page.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('On Shop Page.', 'ultimate-woocommerce-auction-custom'); ?>
 											</td>
 										</tr>
 										<tr>
 											<th scope="row"></th>
 											<td>
 												<input <?php checked($search_enable, 'yes'); ?> value="yes" name="uwa_search_enabled" type="checkbox">
-												<?php esc_html_e('On Product Search Page.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('On Product Search Page.', 'ultimate-woocommerce-auction-custom'); ?>
 											</td>
 										</tr>
 
@@ -378,23 +378,23 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 											<th scope="row"></th>
 											<td>
 												<input <?php checked($cat_enable, 'yes'); ?> value="yes" name="uwa_cat_enabled" type="checkbox">
-												<?php esc_html_e('On Product Category Page.', 'ultimate-woocommerce-auction'); ?>
+												<?php esc_html_e('On Product Category Page.', 'ultimate-woocommerce-auction-custom'); ?>
 											</td>
 										</tr>
 
 										<tr>
 											<th scope="row"></th>
 											<td>
-												<input <?php checked($tag_enable, 'yes'); ?> value="yes" name="uwa_tag_enabled" type="checkbox"> <?php esc_html_e('On Product Tag Page.', 'ultimate-woocommerce-auction'); ?>
+												<input <?php checked($tag_enable, 'yes'); ?> value="yes" name="uwa_tag_enabled" type="checkbox"> <?php esc_html_e('On Product Tag Page.', 'ultimate-woocommerce-auction-custom'); ?>
 											</td>
 										</tr>
 										<tr>
 
 											<td colspan="2">
-												<h2 class="uwa_section_tr"><?php esc_html_e('Auction Detail Page', 'ultimate-woocommerce-auction'); ?></h2>
+												<h2 class="uwa_section_tr"><?php esc_html_e('Auction Detail Page', 'ultimate-woocommerce-auction-custom'); ?></h2>
 
 
-												<span style='vertical-align: top;'><?php esc_html_e('The following options affect on frontend Auction Detail page.', 'ultimate-woocommerce-auction'); ?></span>
+												<span style='vertical-align: top;'><?php esc_html_e('The following options affect on frontend Auction Detail page.', 'ultimate-woocommerce-auction-custom'); ?></span>
 											</td>
 
 										</tr>
@@ -402,13 +402,13 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 										<tr>
 											<th scope="row">
-												<label for="uwa_countdown_format"><?php esc_html_e('Countdown Format', 'ultimate-woocommerce-auction'); ?></label>
+												<label for="uwa_countdown_format"><?php esc_html_e('Countdown Format', 'ultimate-woocommerce-auction-custom'); ?></label>
 											</th>
 
 											<td>
-												<input type="text" name="uwa_countdown_format" class="regular-number" id="uwa_countdown_format" value="<?php echo esc_attr($countdown_format); ?>"><?php esc_html_e('The format for the countdown display. Default is yowdHMS', 'ultimate-woocommerce-auction'); ?>
+												<input type="text" name="uwa_countdown_format" class="regular-number" id="uwa_countdown_format" value="<?php echo esc_attr($countdown_format); ?>"><?php esc_html_e('The format for the countdown display. Default is yowdHMS', 'ultimate-woocommerce-auction-custom'); ?>
 												<a href="" class="uwa_fields_tooltip" onclick="return false"><strong>?</strong>
-													<span style="width: 500px; margin-left: -375px;"><?php esc_html_e("Use the following characters (in order) to indicate which periods you want to display: 'Y' for years, 'O' for months, 'W' for weeks, 'D' for days, 'H' for hours, 'M' for minutes, 'S' for seconds.	Use upper-case characters for mandatory periods, or the corresponding lower-case characters for optional periods, i.e. only display if non-zero. Once one optional period is shown, all the ones after that are also shown.", 'ultimate-woocommerce-auction');
+													<span style="width: 500px; margin-left: -375px;"><?php esc_html_e("Use the following characters (in order) to indicate which periods you want to display: 'Y' for years, 'O' for months, 'W' for weeks, 'D' for days, 'H' for hours, 'M' for minutes, 'S' for seconds.	Use upper-case characters for mandatory periods, or the corresponding lower-case characters for optional periods, i.e. only display if non-zero. Once one optional period is shown, all the ones after that are also shown.", 'ultimate-woocommerce-auction-custom');
 																										?>
 													</span></a>
 							</div>
@@ -418,20 +418,20 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 							</tr>
 							<tr>
 								<th scope="row">
-									<label for="uwa_hide_compact_enable"><?php esc_html_e('Hide compact countdown', 'ultimate-woocommerce-auction'); ?></label>
+									<label for="uwa_hide_compact_enable"><?php esc_html_e('Hide compact countdown', 'ultimate-woocommerce-auction-custom'); ?></label>
 								</th>
 								<td>
 									<input <?php checked($compact_checked, 'yes'); ?> value="yes" name="uwa_hide_compact_enable" type="checkbox">
-									<?php esc_html_e('Hide compact countdown format and display simple format.', 'ultimate-woocommerce-auction'); ?>
+									<?php esc_html_e('Hide compact countdown format and display simple format.', 'ultimate-woocommerce-auction-custom'); ?>
 								</td>
 							</tr>
 
 							<tr>
-								<th scope="row"><?php esc_html_e('Enable Specific Sections:', 'ultimate-woocommerce-auction'); ?></th>
+								<th scope="row"><?php esc_html_e('Enable Specific Sections:', 'ultimate-woocommerce-auction-custom'); ?></th>
 
 								<td>
 									<input <?php checked($private_tab_enable, 'yes'); ?> value="yes" name="uwa_private_message" type="checkbox">
-									<?php esc_html_e('Enable Send Private message.', 'ultimate-woocommerce-auction'); ?>
+									<?php esc_html_e('Enable Send Private message.', 'ultimate-woocommerce-auction-custom'); ?>
 								</td>
 							</tr>
 
@@ -440,7 +440,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 								<td>
 									<input <?php checked($bids_tab_enable, 'yes'); ?> value="yes" name="uwa_bids_tab" type="checkbox">
-									<?php esc_html_e('Enable Bids section.', 'ultimate-woocommerce-auction'); ?>
+									<?php esc_html_e('Enable Bids section.', 'ultimate-woocommerce-auction-custom'); ?>
 								</td>
 							</tr>
 
@@ -449,19 +449,19 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 
 								<td>
 									<input <?php checked($watchlists_tab_enable, 'yes'); ?> value="yes" name="uwa_watchlists_tab" type="checkbox">
-									<?php esc_html_e('Enable Watchlists.', 'ultimate-woocommerce-auction'); ?>
+									<?php esc_html_e('Enable Watchlists.', 'ultimate-woocommerce-auction-custom'); ?>
 
 								</td>
 							</tr>
 
 							<tr>
-								<th scope="row"><label for="uwa_enable_bid_place_warning"><?php esc_html_e('Enable an alert box:', 'ultimate-woocommerce-auction'); ?></label></th>
+								<th scope="row"><label for="uwa_enable_bid_place_warning"><?php esc_html_e('Enable an alert box:', 'ultimate-woocommerce-auction-custom'); ?></label></th>
 								<td class="uwaforminp">
 
 									<input type="checkbox" <?php checked($bid_warning, 'yes'); ?> name="uwa_enable_bid_place_warning" id="uwa_enable_bid_place_warning" value="yes">
-									<?php esc_html_e('Enable an alert box for confirmation when user places a bid.', 'ultimate-woocommerce-auction');  ?><a href="" class="uwa_fields_tooltip" onclick="return false"><strong>?</strong>
+									<?php esc_html_e('Enable an alert box for confirmation when user places a bid.', 'ultimate-woocommerce-auction-custom');  ?><a href="" class="uwa_fields_tooltip" onclick="return false"><strong>?</strong>
 										<span>
-											<?php esc_html_e('This setting lets you enable an alert confirmation which is shown to user when they place a bid.', 'ultimate-woocommerce-auction');  ?>
+											<?php esc_html_e('This setting lets you enable an alert confirmation which is shown to user when they place a bid.', 'ultimate-woocommerce-auction-custom');  ?>
 										</span></a>
 								</td>
 							</tr>
@@ -473,7 +473,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 							<tfoot>
 								<tr>
 									<td colspan="2" valign="top" scope="row">
-										<input type="submit" id="uwa-settings-submit" name="uwa-settings-submit" class="button-primary" value="<?php esc_html_e('Save Changes', 'ultimate-woocommerce-auction'); ?>" />
+										<input type="submit" id="uwa-settings-submit" name="uwa-settings-submit" class="button-primary" value="<?php esc_html_e('Save Changes', 'ultimate-woocommerce-auction-custom'); ?>" />
 									</td>
 								</tr>
 							</tfoot>

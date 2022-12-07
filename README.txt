@@ -239,7 +239,7 @@ Answer : Copy paste in your functions.php file of theme as per your requirement.
 	add_filter('ultimate_woocommerce_auction_bid_button_text', 'here_your_function_name' );
 	function here_your_function_name(){
 
-		 return __('Button Text', 'ultimate-woocommerce-auction');
+		 return __('Button Text', 'ultimate-woocommerce-auction-custom');
 	} 
 -----------------------------------------------------------------
 3) Heading for Total Bids
@@ -253,7 +253,7 @@ Answer: Copy paste in your functions.php file of theme as per your requirement.
 	add_filter('ultimate_woocommerce_auction_total_bids_heading', 'here_your_function_name1' );
 	function here_your_function_name1(){
 
-		 return __('Total Bids Placed:', 'ultimate-woocommerce-auction');
+		 return __('Total Bids Placed:', 'ultimate-woocommerce-auction-custom');
 	} 
 -----------------------------------------------------------------
 4) Pay Now Button 
@@ -267,7 +267,7 @@ Answer : Copy paste in your functions.php file of theme as per your requirement.
 	add_filter('ultimate_woocommerce_auction_pay_now_button_text', 'here_your_function_name' );
 	function here_your_function_name(){
 
-		return __('Pay Now Text', 'ultimate-woocommerce-auction');
+		return __('Pay Now Text', 'ultimate-woocommerce-auction-custom');
 	} 
 -----------------------------------------------------------------
 
