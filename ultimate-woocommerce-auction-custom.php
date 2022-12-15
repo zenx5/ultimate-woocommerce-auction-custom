@@ -157,6 +157,31 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 						add_action('woocommerce_process_product_meta', array($this, 'uwa_syncronise_metadata_wpml'), 85);
 					}
 					/* For WPML Support - end */
+					add_action( 'rest_api_init', array($this, 'uwa_api_routes') );
+				}
+				public function uwa_api_routes(){
+					register_rest_route( 'wp/v2', '/auctions', array(
+						'methods'  => 'get',
+						'callback' => function( $request ){
+							$auctions = [];
+							$query = new WP_Query(array(
+								'post_type' => 'product',
+								'posts_per_page' => -1,
+							));
+							$posts = $query->posts;
+							foreach( $posts as $post ){
+								$auctions[] = (new WC_Product_Auction( $post->ID ))->get_data();
+							}
+							return $auctions;
+						},
+					) );
+					register_rest_route( 'wp/v2', '/auctions/(?P<id>\d+)', array(
+						'methods'  => 'get',
+						'callback' => function( $request ){
+							$auction = new WC_Product_Auction( $request['id'] );
+							return $auction->get_data();
+						},
+					) );
 				}
 				/**
 				 * Load Text Domain.
