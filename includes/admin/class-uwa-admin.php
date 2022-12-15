@@ -184,6 +184,12 @@ class UWA_Admin
 				'target' => 'auction_options',
 				'class'  => array('show_if_auction', 'hide_if_grouped', 'hide_if_external', 'hide_if_variable', 'hide_if_simple'),
 			),
+			'location_tab' => array(
+				'label'  => __('Location', 'ultimate-woocommerce-auction-custom'),
+				'target' => 'location_options',
+				'class'  => array('show_if_auction', 'hide_if_grouped', 'hide_if_external', 'hide_if_variable', 'hide_if_simple'),
+			),
+
 		);
 
 		return $auction_tab + $product_data_tabs;
@@ -230,6 +236,94 @@ class UWA_Admin
 		}
 
 		?>
+
+		<div id='location_options' class='panel woocommerce_options_panel'>
+			<?php
+				woocommerce_wp_hidden_input(array(
+					'id'			=> 'woo_ua_latitude_current',
+					'value'         => $woo_ua_form_type,
+				));
+
+				woocommerce_wp_hidden_input(array(
+					'id'			=> 'woo_ua_longitude_current',
+					'value'         => $woo_ua_form_type,
+				));
+
+				woocommerce_wp_text_input(array(
+					'id'			=> 'woo_ua_latitude',
+					'label'			=> __('Latitude', 'ultimate-woocommerce-auction-custom'),
+					'data_type' 			=> 'text',
+				));
+
+				woocommerce_wp_text_input(array(
+					'id'			=> 'woo_ua_longitude',
+					'label'			=> __('Longitude', 'ultimate-woocommerce-auction-custom'),
+					'data_type' 			=> 'text',
+				));
+			?>
+			<script>
+				function isPositioned(){
+					return (document.querySelector('#woo_ua_latitude_current').value !== '' &&
+					document.querySelector('#woo_ua_longitude_current').value !== '')
+				}
+				navigator.geolocation.getCurrentPosition( position => {
+					const { latitude, longitude } = position.coords
+					console.log( position.coords )
+					document.querySelector('#woo_ua_latitude_current').value = latitude
+					document.querySelector('#woo_ua_longitude_current').value = longitude
+				})
+			</script>
+			<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+			<script>
+				let map;
+				let marked = isPositioned()
+				let marker = null
+				
+				function initMap() {
+					let latitude = document.querySelector('#woo_ua_latitude_current').value
+					let longitude = document.querySelector('#woo_ua_longitude_current').value
+					console.log( latitude, longitude )
+					map = new google.maps.Map(document.getElementById("map"), {
+						center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+						zoom: 13,
+					});
+					new google.maps.Marker({
+						position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+						map,
+						title: "Mi posicion",
+					});
+					if( isPositioned() && marker === null ){						
+						marker = new google.maps.Marker({
+							position: { 
+								lat: parseFloat(document.querySelector('#woo_ua_latitude').value), 
+								lng: parseFloat(document.querySelector('#woo_ua_longitude').value) 
+							},
+							map,
+							label:'X',
+							title: "Destino",
+						});
+					}
+					map.addListener("click", (mapsMouseEvent) => {
+						if( !marked ){
+							marker = new google.maps.Marker({
+								position: mapsMouseEvent.latLng,
+								map,
+								label:'X',
+								title: "Destino",
+							});
+							marked = true
+						}else{
+							marker.setPosition(mapsMouseEvent.latLng)
+						}
+						document.querySelector('#woo_ua_latitude').value = mapsMouseEvent.latLng.lat()
+						document.querySelector('#woo_ua_longitude').value = mapsMouseEvent.latLng.lng()
+					});
+				}
+				window.initMap = initMap;
+			</script>
+			<div id="map" style="width: 600px; height: 230px;margin: auto;"></div>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0ECOlC8qO275G9I6J0xu9tFNzxrJpb2U&callback=initMap&v=weekly" defer></script>
+		</div>
 
 		<div id='auction_options' class='panel woocommerce_options_panel'>
 			<div class='options_group'>
@@ -391,6 +485,21 @@ class UWA_Admin
 				update_post_meta($post_id, '_price', wc_format_decimal(wc_clean($_POST['_regular_price'])));
 			}
 
+			if (isset($_POST['woo_ua_latitude'])) {
+				update_post_meta($post_id, 'woo_ua_latitude', sanitize_text_field($_POST['woo_ua_latitude']));
+			}
+
+			if (isset($_POST['woo_ua_longitude'])) {
+				update_post_meta($post_id, 'woo_ua_longitude', sanitize_text_field($_POST['woo_ua_longitude']));
+			}
+
+			if (isset($_POST['woo_ua_latitude_current'])) {
+				update_post_meta($post_id, 'woo_ua_latitude_current', sanitize_text_field($_POST['woo_ua_latitude_current']));
+			}
+
+			if (isset($_POST['woo_ua_longitude_current'])) {
+				update_post_meta($post_id, 'woo_ua_longitude_current', sanitize_text_field($_POST['woo_ua_longitude_current']));
+			}
 
 			if (isset($_POST['woo_ua_product_condition'])) {
 				update_post_meta($post_id, 'woo_ua_product_condition', sanitize_text_field($_POST['woo_ua_product_condition']));
@@ -483,6 +592,10 @@ class UWA_Admin
 			if (sanitize_text_field($_POST['woo_ua_product_type']) == "auction" && sanitize_text_field($_POST['product-type']) != "auction") {
 
 				/* when product type is not auction, remove auction related data */
+				delete_post_meta($post_id, "woo_ua_latitude");
+				delete_post_meta($post_id, "woo_ua_longitude");
+				delete_post_meta($post_id, "woo_ua_latitude_current");
+				delete_post_meta($post_id, "woo_ua_longitude_current");
 				delete_post_meta($post_id, "woo_ua_auction_type");
 				delete_post_meta($post_id, "woo_ua_product_condition");
 				delete_post_meta($post_id, "woo_ua_opening_price");
