@@ -18,6 +18,10 @@ if (isset($_POST['uwa-settings-submit']) == 'Save Changes') {
 	if (isset($_POST['uwa_cron_status_number'])) {
 		update_option('woo_ua_cron_auction_status_number', absint($_POST['uwa_cron_status_number']));
 	}
+	$gmap_api_key  = isset($_POST['uwa_google_map_api_key']) ? $_POST['uwa_google_map_api_key'] : '';
+	if (!empty($gmap_api_key)) {
+		update_option('uwa_google_map_api_key', $gmap_api_key);
+	}
 
 	// Auction Product Section		 
 	$ajax_bid_enable  = isset($_POST['uwa_bid_ajax_enable']) ? sanitize_key($_POST['uwa_bid_ajax_enable']) : 'no';
@@ -90,12 +94,14 @@ if (isset($_POST['uwa-settings-submit']) == 'Save Changes') {
 	if (!empty($bid_place_warning)) {
 		update_option('uwa_enable_bid_place_warning', $bid_place_warning);
 	}
+
 }
 
 
 // Cron Setting Section
 $uwa_cron_status_in = get_option('woo_ua_cron_auction_status', '2');
 $uwa_cron_status_number = get_option('woo_ua_cron_auction_status_number', '25');
+$gmap_api_key = get_option('uwa_google_map_api_key', '');
 
 //Auction Section
 $uwa_bid_ajax_interval = get_option('woo_ua_auctions_bid_ajax_interval', '25');
@@ -335,6 +341,13 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 											<td class="uwaforminp">
 												<input type="checkbox" <?php checked($owner_bid_enable, 'yes'); ?> name="uwa_allow_owner_to_bid" id="uwa_allow_owner_to_bid" value="yes">
 												<?php esc_html_e('Allow Auction Owner (Seller/Vendor) to bid on their own auction.', 'ultimate-woocommerce-auction-custom');  ?>
+											</td>
+										</tr>
+
+										<tr>
+											<th>Google Map API Key:</th>
+											<td class="uwaforminp">
+												<input type="text" name="uwa_google_map_api_key" class="regular-number" id="uwa_google_map_api_key" style="width:80%" value="<?php echo esc_attr($gmap_api_key); ?>">
 											</td>
 										</tr>
 

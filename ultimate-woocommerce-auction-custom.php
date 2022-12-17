@@ -168,6 +168,17 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 				}
 
 				public function uwa_api_routes(){
+
+					function searchValueByKey( $elements, $key, $default, $is_bool = false ){
+						$result = $default;
+						foreach( $elements as $element ) {
+							if( $element->key === $key ) {
+								$result = $element->value;
+							}
+						}
+						return $is_bool ? boolval($result) : $result;
+					}
+
 					register_rest_route( 'wp/v2', '/auctions', array(
 						'methods'  => 'get',
 						'callback' => function( $request ){
@@ -184,7 +195,29 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 									$medias[] = wp_get_attachment_image_src($id);
 								}
 								$result['images'] = $medias;
-								$auctions[] = $result;
+								$auctions[] = [
+									'id' => $result['id'],
+									'name' => $result['name'],
+									'slug' => $result['slug'],
+									'status' => $result['status'],
+									'images' => $result['images'],
+									'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
+									'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
+									'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
+									'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
+									'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
+									'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
+									'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
+									'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
+									'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
+									'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
+									'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
+									'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
+									'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
+									'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
+									'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
+									'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
+								];
 							}
 							return $auctions;
 						},
@@ -199,7 +232,29 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 								$medias[] = wp_get_attachment_image_src($id);
 							}
 							$result['images'] = $medias;
-							return $result;
+							return [
+								'id' => $result['id'],
+								'name' => $result['name'],
+								'slug' => $result['slug'],
+								'status' => $result['status'],
+								'images' => $result['images'],
+								'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
+								'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
+								'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
+								'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
+								'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
+								'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
+								'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
+								'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
+								'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
+								'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
+								'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
+								'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
+								'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
+								'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
+								'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
+								'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
+							];
 						},
 					) );
 				}
