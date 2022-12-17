@@ -54,10 +54,11 @@ class UWA_Scripts
 		wp_register_script('uwa-admin', WOO_UA_ASSETS_URL . 'js/uwa-admin.js', array('jquery'), WOO_UA_VERSION);
 
 		wp_register_script('uwa-datepicker', WOO_UA_ASSETS_URL . 'js/date-picker.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), '1.0');
+		//wp_register_script('uwa-location', WOO_UA_ASSETS_URL . 'js/location.js');
 		// localization script
 		wp_localize_script('uwa-admin', 'WpUat', array('calendar_icon' => '<i class="dashicons-calendar-alt"></i>'));
 		wp_localize_script('uwa-admin', 'WooUa', array('ajaxurl' => admin_url('admin-ajax.php'), 'ua_nonce' => wp_create_nonce('UtAajax-nonce'), 'calendar_image' => WC()->plugin_url() . '/assets/images/calendar.png', 'reguler_required_message' => __('Please enter Regular price.', 'ultimate-woocommerce-auction-custom')));
-		wp_enqueue_script('uwa-admin');
+		wp_enqueue_script('uwa-admin');		
 
 		wp_enqueue_script('uwa-datepicker');
 	}
