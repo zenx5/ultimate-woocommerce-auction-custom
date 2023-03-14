@@ -17,7 +17,7 @@
         return (document.querySelector(`#woo_ua_latitude${label}`).value !== '' &&
         document.querySelector(`#woo_ua_longitude${label}`).value !== '')
     }
-    
+
     navigator.geolocation.getCurrentPosition( position => {
         const { latitude, longitude } = position.coords
         document.querySelector('#woo_ua_latitude_current').value = latitude
@@ -87,11 +87,22 @@
         });
         directionsRenderer.setOptions({ preserveViewport: true })
         directionsRenderer.setMap( map )
+        
+        
 
         new google.maps.Marker({
             position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
             map,
+            icon: {
+                url: '../wp-content/plugins/ultimate-woocommerce-auction-custom/assets/here.png',
+                size: new google.maps.Size(32,32),
+                scaledSize: new google.maps.Size(32,32),
+                //origin: new google.maps.Point(100, 0)
+                //anchor: new google.maps.Point(0, 32),
+
+            },
             title: "Mi posicion",
+            color: 'yellow'
         });
         
         if( isPositioned('') && marker === null ){
@@ -102,6 +113,12 @@
                 },
                 title: "Desde",
             });
+            map.setCenter(
+                {
+                    lat: parseFloat(document.querySelector('#woo_ua_latitude').value),
+                    lng: parseFloat(document.querySelector('#woo_ua_longitude').value)
+                }
+            )
         }
         if( isPositioned('_end') && markerEnd === null ){
             markerEnd = new google.maps.Marker({

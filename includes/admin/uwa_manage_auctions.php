@@ -441,7 +441,7 @@ function woo_ua_list_page_handler_display()
 			}
 			if (current_user_can('manage_options')) {
 				$user_id = $current_user->ID;
-				$user_hide_notice = get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
+				$user_hide_notice = true; // get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
 				if ($user_hide_notice != "true") {
 			?>
 					<div class="notice notice-info">

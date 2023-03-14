@@ -136,7 +136,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 	<div class="get_uwa_pro">
 
 		<!-- <a href="#?utm_source=woo plugin&utm_medium=horizontal banner&utm_campaign=learn-more-button" target="_blank"> <img src="<?php echo esc_url(WOO_UA_ASSETS_URL); ?>/images/UWCA_row.jpg" alt="" /> </a>
-                
+
     	<div class="clear"></div> -->
 		<?php
 		global $current_user;
@@ -147,7 +147,7 @@ $bid_warning = get_option('uwa_enable_bid_place_warning');
 		}
 		if (current_user_can('manage_options')) {
 			$user_id = $current_user->ID;
-			$user_hide_notice = get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
+			$user_hide_notice = true; // get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
 			if ($user_hide_notice != "true") {
 		?>
 				<div class="notice notice-info">

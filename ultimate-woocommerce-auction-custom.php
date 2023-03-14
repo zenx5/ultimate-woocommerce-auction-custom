@@ -114,6 +114,8 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 					} else {
 						add_action('admin_notices', array($this, 'uwa_pro_add_plugins_notice'));
 					}
+					//tools for google maps
+					require_once(WOO_UA_DIR . '/includes/class-uwa-tools-gmaps.php');
 					/* Create Auction Product Type */
 					require_once(WOO_UA_DIR . '/includes/class-uwa-product.php');
 					/* Scripts class to handle scripts functionality */
@@ -179,8 +181,44 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 						return $is_bool ? boolval($result) : $result;
 					}
 
+					register_rest_route( 'wp/v2', '/users/login', array(
+						'methods'  => 'post',
+						'permission_callback' => '__return_true',
+						'callback' => function( $request ){
+							$nick = $request['user'];
+							$pass = $request['pass'];
+							$user = get_users( [
+								"search" => $nick,
+								"search_columns" => ["user_login", "user_email"]
+							] );
+							$check_access = $user ? wp_check_password( $pass, $user[0]->data->user_pass, $user[0]->data->ID ) : false;
+							if( $check_access ) {
+								return [
+									"is_login" => true,
+									"user" => [
+										"ID" => $user[0]->data->ID,
+										"user_login" => $user[0]->data->user_login,
+										"user_nicename" => $user[0]->data->user_nicename,
+										"user_email" => $user[0]->data->user_email,
+										"display_name" => $user[0]->data->display_name,
+									],
+									"status" => "success", 
+									"message" => "Success"
+								];
+							}else{
+								return [
+									"is_login" => false,
+									"user" => null,
+									"status" => "error",
+									"message" => $user ? (!$check_access ? "Contraseña invalida" : "Unknow error" ) : "Usuario no existe"
+								];
+							}
+						}
+					));
+
 					register_rest_route( 'wp/v2', '/auctions', array(
 						'methods'  => 'get',
+						'permission_callback' => '__return_true',
 						'callback' => function( $request ){
 							$auctions = [];
 							$query = new WP_Query(array(
@@ -201,14 +239,17 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 									'slug' => $result['slug'],
 									'status' => $result['status'],
 									'images' => $result['images'],
-									'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
-									'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
-									'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
-									'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
-									'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
-									'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
+									'latitudeStart' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0) ),
+									'longitudeStart' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0) ),
+									'latitudeEnd' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0) ),
+									'longitudeEnd' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0) ),
+									'latitudeOwner' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0) ),
+									'longitudeOwner' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0) ),
 									'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
 									'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
+									'currentPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bid', searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0) ),
+									'currentBider' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bider', 0),
+									'bidCount' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_bid_count', 0),
 									'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
 									'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
 									'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
@@ -219,45 +260,86 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 									'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
 								];
 							}
-							return $auctions;
+							return self::filter_auctions( $auctions );
 						},
 					) );
 					register_rest_route( 'wp/v2', '/auctions/(?P<id>\d+)', array(
 						'methods'  => 'get',
+						'permission_callback' => '__return_true',
 						'callback' => function( $request ){
-							$auction = new WC_Product_Auction( $request['id'] );
-							$result = $auction->get_data();
-							$medias = [ wp_get_attachment_image_src($result['image_id']) ];
-							foreach( $result['gallery_image_ids'] as $id ){
-								$medias[] = wp_get_attachment_image_src($id);
+							try{
+								$auction = new WC_Product_Auction( $request['id'] );	
+								$result = $auction->get_data();
+								$medias = [ wp_get_attachment_image_src($result['image_id']) ];
+								foreach( $result['gallery_image_ids'] as $id ){
+									$medias[] = wp_get_attachment_image_src($id);
+								}
+								$result['images'] = $medias;
+								// return $result['meta_data'];
+								$auctions = [
+									'id' => $result['id'],
+									'name' => $result['name'],
+									'slug' => $result['slug'],
+									'status' => $result['status'],
+									'images' => $result['images'],
+									'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
+									'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
+									'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
+									'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
+									'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
+									'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
+									'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
+									'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
+									'currentPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bid', searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0) ),
+									'currentBider' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bider', 0),
+									'bidCount' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_bid_count', 0),
+									'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
+									'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
+									'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
+									'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
+									'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
+									'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
+									'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
+									'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
+								];
+								return self::filter_auctions( [$auctions] );
+							}catch(Exception $error){
+								return [];
 							}
-							$result['images'] = $medias;
-							return [
-								'id' => $result['id'],
-								'name' => $result['name'],
-								'slug' => $result['slug'],
-								'status' => $result['status'],
-								'images' => $result['images'],
-								'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
-								'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
-								'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
-								'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
-								'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
-								'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
-								'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
-								'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
-								'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
-								'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
-								'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
-								'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
-								'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
-								'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
-								'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
-								'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
-							];
 						},
 					) );
 				}
+				
+				public static function filter_auctions( $auctions )
+				{
+					return $auctions;
+					$filterby = isset( $_REQUEST['filterby'] ) ? $_REQUEST['filterby'] : '';
+					if( 'location' === $filterby ){
+						$ref = isset( $_REQUEST['ref'] ) ? $_REQUEST['ref'] : 'Start';
+						$dist = isset( $_REQUEST['dist'] ) ? $_REQUEST['dist'] : 15; 
+						$latitude = isset( $_REQUEST['lat'] ) ? $_REQUEST['lat'] : 0;
+						$longitude = isset( $_REQUEST['lng'] ) ? $_REQUEST['lng'] : 0;
+						$result = [];
+						foreach( $auctions as $auction ){
+							$response = UWA_Gmap::get_lineal_distance(
+								[ 
+									'lat' => $latitude,
+									'lng' => $longitude
+								],
+								[
+									'lat' => $auction['latitudeStart'],
+									'lng' => $auction['longitudeStart']
+								]
+							);
+							if( $response['distance'] <= $dist ) {
+								$result[] = $auction;
+							}
+						}
+						return $result;						
+					}
+					return $auctions;
+				}
+
 				/**
 				 * Load Text Domain.
 				 */
@@ -298,7 +380,7 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 					}
 					if (current_user_can('manage_options')) {
 						$user_id = $current_user->ID;
-						$user_hide_notice = get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
+						$user_hide_notice = true; // get_user_meta($user_id, 'uwa_pro_add_plugin_notice_disable', true);
 						if ($user_hide_notice != "true") {
 			?>
 							<div class="notice notice-info">

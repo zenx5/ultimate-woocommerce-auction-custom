@@ -238,41 +238,59 @@ class UWA_Admin
 		?>
 
 		<div id='location_options' class='panel woocommerce_options_panel'>
-			<?php
-				woocommerce_wp_hidden_input(array(
-					'id'			=> 'woo_ua_latitude_current',
-					'value'         => $woo_ua_form_type,
-				));
+			<div style="display:flex">
+				<div style="width:80%">
+					<?php
+						woocommerce_wp_hidden_input(array(
+							'id'			=> 'woo_ua_latitude_current',
+							'value'         => $woo_ua_form_type,
+						));
 
-				woocommerce_wp_hidden_input(array(
-					'id'			=> 'woo_ua_longitude_current',
-					'value'         => $woo_ua_form_type,
-				));
+						woocommerce_wp_hidden_input(array(
+							'id'			=> 'woo_ua_longitude_current',
+							'value'         => $woo_ua_form_type,
+						));
 
-				woocommerce_wp_text_input(array(
-					'id'			=> 'woo_ua_latitude',
-					'label'			=> __('Latitude Start', 'ultimate-woocommerce-auction-custom'),
-					'data_type' 			=> 'text',
-				));
+						woocommerce_wp_text_input(array(
+							'id'			=> 'woo_ua_latitude',
+							'label'			=> __('Latitude Start', 'ultimate-woocommerce-auction-custom'),
+							'data_type' 	=> 'text',
+							'style'			=> 'width:100%'
+						));
 
-				woocommerce_wp_text_input(array(
-					'id'			=> 'woo_ua_longitude',
-					'label'			=> __('Longitude Start', 'ultimate-woocommerce-auction-custom'),
-					'data_type' 			=> 'text',
-				));
+						woocommerce_wp_text_input(array(
+							'id'			=> 'woo_ua_longitude',
+							'label'			=> __('Longitude Start', 'ultimate-woocommerce-auction-custom'),
+							'data_type' 	=> 'text',
+							'style'			=> 'width:100%'
+						));
 
-				woocommerce_wp_text_input(array(
-					'id'			=> 'woo_ua_latitude_end',
-					'label'			=> __('Latitude End', 'ultimate-woocommerce-auction-custom'),
-					'data_type' 			=> 'text',
-				));
+						woocommerce_wp_text_input(array(
+							'id'			=> 'woo_ua_latitude_end',
+							'label'			=> __('Latitude End', 'ultimate-woocommerce-auction-custom'),
+							'data_type' 	=> 'text',
+							'style'			=> 'width:100%'
+						));
 
-				woocommerce_wp_text_input(array(
-					'id'			=> 'woo_ua_longitude_end',
-					'label'			=> __('Longitude End', 'ultimate-woocommerce-auction-custom'),
-					'data_type' 			=> 'text',
-				));
-			?>
+						woocommerce_wp_text_input(array(
+							'id'			=> 'woo_ua_longitude_end',
+							'label'			=> __('Longitude End', 'ultimate-woocommerce-auction-custom'),
+							'data_type' 	=> 'text',
+							'style'			=> 'width:100%'
+						));
+					?>
+				</div>
+				<div style="display: flex; justify-content: space-around; align-items: center; flex-direction: column; width: 20%;">
+					<div style="align-items: center; display: flex; flex-direction: column;">
+						<img 
+							src='../wp-content/plugins/ultimate-woocommerce-auction-custom/assets/here.png' 
+							width="32"
+							height="32"
+						/>
+						<div>Tu posicion</div>
+					</div>
+				</div>
+			</div>
 			<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 			<script src="<?=WOO_UA_ASSETS_URL . 'js/location.js'?>"></script>
 			<div id="map" style="width: 600px; height: 230px;margin: auto;"></div>
