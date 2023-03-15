@@ -82,6 +82,8 @@ class UWA_Front
 		$this->uwa_item_condition =  array('new' => __('New', 'ultimate-woocommerce-auction-custom'), 'used' => __('Used', 'ultimate-woocommerce-auction-custom'));
 
 
+		add_action('woocommerce_product_tabs', array($this, 'uwa_auction_map_tab'));
+
 		//Total Bids Place Section On Auction Detail Page
 		if (get_option('woo_ua_auctions_bids_section_tab') == 'yes') {
 
@@ -438,6 +440,41 @@ class UWA_Front
 		}
 		return $tabs;
 	}
+
+	/**
+	 * Add Map Tab Single Page.
+	 *
+	 * @return void
+	 */
+	public function uwa_auction_map_tab($tabs){
+		global $product;
+
+		if (method_exists($product, 'get_type') && $product->get_type() == 'auction') {
+
+			$tabs['uwa_auction_map_tab'] = array(
+				'title' => __('Map', 'ultimate-woocommerce-auction-custom'),
+				'priority' => 50,
+				'callback' => array($this, 'uwa_auction_map_tab_callback'),
+
+			);
+		}
+
+		return $tabs;
+	}
+
+	/**
+	 * Auction call back from Private Message Tab.
+	 *
+	 * @package Ultimate WooCommerce Auction
+	 * @author Nitesh Singh 
+	 * @since 1.0
+	 * @return void
+	 */
+
+	 public function uwa_auction_map_tab_callback($tabs)
+	 {
+		 wc_get_template('single-product/tabs/uwa-map.php');
+	 }
 
 	/**
 	 * Add Private message Tab Single Page.
