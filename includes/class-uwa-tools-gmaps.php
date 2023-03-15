@@ -27,4 +27,59 @@ class UWA_Gmap {
         ];
     }
 
+    public static function setMarkers($markers = []){
+        ?>
+        <script>
+            function setMarkers(map) {
+                <?=json_encode( $markers )?>.forEach( marker => {
+                    new google.maps.Marker({
+                        position: {
+                            lat: parseFloat( marker.lat ),
+                            lng: parseFloat( marker.lng ),
+                        },
+                        map
+                    })
+                })
+            }
+            window.setMarkers = setMarkers;
+        </script>
+        <?php
+    }
+
+    public static function initMap($id, $zoom, $lat = null , $lng = null ) {
+        $hasCenter = $lat!==null && $lng!==null;
+        ?>
+        <script>
+            function initMap() {
+                <?php if( !$hasCenter ) : ?>
+                    navigator.geolocation.getCurrentPosition( position => {
+                        const { latitude:lat, longitude:lng } = position.coords
+                        let map = new google.maps.Map(document.getElementById("<?=$id?>"), {
+                            center: { lat, lng },
+                            zoom: <?=$zoom?>,
+                        });
+                    })
+                <?php else: ?>
+                    let map = new google.maps.Map(document.getElementById("<?=$id?>"), {
+                        center: {
+                            lat: <?=$lat?>,
+                            lng: <?=$lng?>
+                        },
+                        zoom: <?=$zoom?>,
+                    });
+                <?php endif; ?>
+                if( window.setMarkers ){
+                    window.setMarkers(map)
+                }
+            }
+            window.initMap = initMap;
+            var script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=<?=get_option('uwa_google_map_api_key', '')?>&callback=initMap';
+            document.body.appendChild(script);
+        </script>
+        <?php
+
+
+    }
+
 }

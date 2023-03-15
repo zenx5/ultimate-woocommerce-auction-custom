@@ -17,7 +17,6 @@ $markers = [
 ];
 ?>
 <div class="container-map">
-
     <div id="map" style="height: 300px; width:auto;"></div>
     <?php UWA_Gmap::initMap('map',12, $latitude, $longitude); ?>
     <?php UWA_Gmap::setMarkers($markers); ?>

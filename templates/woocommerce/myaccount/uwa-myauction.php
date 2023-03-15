@@ -69,3 +69,22 @@ if (count($my_auctions) > 0) { ?>
         <?php } ?>
 
     </table>
+
+    <div>
+        <h4>En mi zona</h4>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script>
+            function initMap() {
+                navigator.geolocation.getCurrentPosition( position => {
+                    const { latitude:lat, longitude:lng } = position.coords
+                    let map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat, lng },
+                        zoom: 12,
+                    });
+                })
+            }
+            window.initMap = initMap;
+        </script>
+        <div id="map" style="width: auto; height: 300px;margin: auto;"></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<?=get_option('uwa_google_map_api_key', '')?>&callback=initMap&v=weekly" defer></script>
+    </div>
