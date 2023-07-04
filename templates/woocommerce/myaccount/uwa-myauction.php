@@ -74,17 +74,60 @@ if (count($my_auctions) > 0) { ?>
         <h4>En mi zona</h4>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <script>
+            const auctions = <?=json_encode( UWA_AJAX::endpoint_get_auction() )?>;
+            console.log( auctions )
             function initMap() {
-                navigator.geolocation.getCurrentPosition( position => {
+                navigator.geolocation.getCurrentPosition( async position => {
                     const { latitude:lat, longitude:lng } = position.coords
+                    console.log( lat, lng )
+                    const center = { lat:8.25, lng:-62.80 }
+
                     let map = new google.maps.Map(document.getElementById("map"), {
-                        center: { lat, lng },
+                        center: center,
                         zoom: 12,
                     });
+                    const svgMarker = {
+                        path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                        fillColor: "blue",
+                        fillOpacity: 0.6,
+                        strokeWeight: 0,
+                        rotation: 0,
+                        scale: 2,
+                        anchor: new google.maps.Point(0, 20),
+                    };
+                    window.map = map
+                    
+                    new google.maps.Marker({
+                        position: center,
+                        icon: svgMarker, 
+                        map
+                    });
+                    auctions.forEach( auction => {
+                        // const diffLat = Math.pow( Math.abs( auction.latitudeStart - center.lat ), 2 )
+                        // const diffLng = Math.pow( Math.abs( auction.longitudeStart - center.lng ), 2 )
+                        // const distance = Math.pow( diffLat + diffLng, 0.5 )
+                        // console.log( distance )
+                        const marker = new google.maps.Marker({
+                            position: { lat:auction.latitudeStart, lng:auction.longitudeStart },
+                            map
+                        });
+                        marker.addListener('click', event => {
+                            const details = document.querySelector("#details")
+                            const slug = document.location.origin + '/producto/' + auction.slug
+                            details.innerHTML = `
+                                <p>Nombre: 
+                                    <b>${auction.name}</b>
+                                </p>
+                                <a href="${slug}" target="_blank">Ir</a>`
+                        } )
+                    } )
                 })
             }
             window.initMap = initMap;
         </script>
         <div id="map" style="width: auto; height: 300px;margin: auto;"></div>
+        <div id="details" style="display:flex; justify-content:space-between; padding:20px;">
+
+        </div>  
         <script src="https://maps.googleapis.com/maps/api/js?key=<?=get_option('uwa_google_map_api_key', '')?>&callback=initMap&v=weekly" defer></script>
     </div>

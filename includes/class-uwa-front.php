@@ -100,7 +100,7 @@ class UWA_Front
 		//Private Message Section On Auction Detail Page		
 		if (get_option('woo_ua_auctions_private_message') == 'yes') {
 
-			add_action('woocommerce_product_tabs', array($this, 'uwa_auction_private_msg_tab'));
+			// add_action('woocommerce_product_tabs', array($this, 'uwa_auction_private_msg_tab'));
 
 			//Ajax For Private Message		
 
@@ -397,7 +397,7 @@ class UWA_Front
 
 			$tabs['uwa_auction_bids_history'] = array(
 				'title' => __('Bids', 'ultimate-woocommerce-auction-custom'),
-				'priority' => 25,
+				'priority' => 2,
 				'callback' => array($this, 'uwa_auction_bids_tab_callback'),
 
 			);
@@ -453,7 +453,7 @@ class UWA_Front
 
 			$tabs['uwa_auction_map_tab'] = array(
 				'title' => __('Map', 'ultimate-woocommerce-auction-custom'),
-				'priority' => 50,
+				'priority' => 1,
 				'callback' => array($this, 'uwa_auction_map_tab_callback'),
 
 			);

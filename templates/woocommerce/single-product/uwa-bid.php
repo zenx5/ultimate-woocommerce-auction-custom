@@ -19,12 +19,12 @@ $gmt_offset = get_option('gmt_offset') > 0 ? '+' . get_option('gmt_offset') : ge
 $timezone_string = get_option('timezone_string') ? get_option('timezone_string') : __('UTC ', 'ultimate-woocommerce-auction-custom') . $gmt_offset;
 $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 ?>
-<p class="uwa_auction_condition">
+<!-- <p class="uwa_auction_condition">
 	<strong>
 		<?php _e('Item condition:', 'ultimate-woocommerce-auction-custom'); ?>
 	</strong>
 	<span class="uwa_auction_current_condition"> <?php _e($product->get_woo_ua_condition(), 'ultimate-woocommerce-auction-custom')  ?></span>
-</p>
+</p> -->
 <?php if (($product->is_woo_ua_closed() === FALSE) and ($product->is_woo_ua_started() === TRUE)) : ?>
 
 	<div class="uwa_auction_time" id="uwa_auction_countdown">
@@ -82,7 +82,7 @@ $uwa_enable_bid_place_warning = get_option('uwa_enable_bid_place_warning');
 			<button type="submit" class="bid_button button alt" id="placebidbutton">
 				<?php echo apply_filters('ultimate_woocommerce_auction_bid_button_text', __('Place Bid', 'ultimate-woocommerce-auction-custom'), $product); ?></button>
 			<div class="uwa_inc_price_hint">
-				<small class="uwa_inc_price">(<?php _e('Enter more than or equal to', 'ultimate-woocommerce-auction-custom') ?> : </small>
+				<small class="uwa_inc_price">(<?php _e('Ingresa un monto menor a', 'ultimate-woocommerce-auction-custom') ?> : </small>
 				<small class="uwa_inc_latest_price uwa_inc_price_ajax_<?php echo esc_attr($product_id); ?>">
 					<?php echo wp_kses_post(wc_price($product->woo_ua_bid_value())); ?> )</small>
 			</div>
