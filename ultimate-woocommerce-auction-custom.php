@@ -6,7 +6,7 @@
  *  Description: Awesome plugin to host auctions with WooCommerce on your wordpress site and sell anything you want.
  *  Author: Nitesh Singh
  *  Version: 2.2.5
- *  Text Domain: ultimate-woocommerce-auction
+ *  Text Domain: ultimate-woocommerce-auction-custom
  *  Domain Path: languages
  *  License: GPLv2
  *  Copyright 2022 Nitesh Singh
@@ -171,16 +171,6 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 
 				public function uwa_api_routes(){
 
-					function searchValueByKey( $elements, $key, $default, $is_bool = false ){
-						$result = $default;
-						foreach( $elements as $element ) {
-							if( $element->key === $key ) {
-								$result = $element->value;
-							}
-						}
-						return $is_bool ? boolval($result) : $result;
-					}
-
 					register_rest_route( 'wp/v2', '/users/login', array(
 						'methods'  => 'post',
 						'permission_callback' => '__return_true',
@@ -220,92 +210,14 @@ if (in_array('woocommerce/woocommerce.php', $blog_plugins) || isset($site_plugin
 						'methods'  => 'get',
 						'permission_callback' => '__return_true',
 						'callback' => function( $request ){
-							$auctions = [];
-							$query = new WP_Query(array(
-								'post_type' => 'product',
-								'posts_per_page' => -1,
-							));
-							$posts = $query->posts;
-							foreach( $posts as $post ){
-								$result = (new WC_Product_Auction( $post->ID ))->get_data();
-								$medias = [ wp_get_attachment_image_src($result['image_id']) ];
-								foreach( $result['gallery_image_ids'] as $id ){
-									$medias[] = wp_get_attachment_image_src($id);
-								}
-								$result['images'] = $medias;
-								$auctions[] = [
-									'id' => $result['id'],
-									'name' => $result['name'],
-									'slug' => $result['slug'],
-									'status' => $result['status'],
-									'images' => $result['images'],
-									'latitudeStart' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0) ),
-									'longitudeStart' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0) ),
-									'latitudeEnd' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0) ),
-									'longitudeEnd' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0) ),
-									'latitudeOwner' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0) ),
-									'longitudeOwner' => floatval( searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0) ),
-									'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
-									'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
-									'currentPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bid', searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0) ),
-									'currentBider' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bider', 0),
-									'bidCount' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_bid_count', 0),
-									'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
-									'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
-									'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
-									'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
-									'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
-									'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
-									'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
-									'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
-								];
-							}
-							return self::filter_auctions( $auctions );
+							return self::filter_auctions( UWA_AJAX::endpoint_get_auction() );
 						},
 					) );
 					register_rest_route( 'wp/v2', '/auctions/(?P<id>\d+)', array(
 						'methods'  => 'get',
 						'permission_callback' => '__return_true',
 						'callback' => function( $request ){
-							try{
-								$auction = new WC_Product_Auction( $request['id'] );	
-								$result = $auction->get_data();
-								$medias = [ wp_get_attachment_image_src($result['image_id']) ];
-								foreach( $result['gallery_image_ids'] as $id ){
-									$medias[] = wp_get_attachment_image_src($id);
-								}
-								$result['images'] = $medias;
-								// return $result['meta_data'];
-								$auctions = [
-									'id' => $result['id'],
-									'name' => $result['name'],
-									'slug' => $result['slug'],
-									'status' => $result['status'],
-									'images' => $result['images'],
-									'latitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude', 0),
-									'longitudeStart' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude', 0),
-									'latitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_end', 0),
-									'longitudeEnd' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_end', 0),
-									'latitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_latitude_curren', 0),
-									'longitudeOwner' => searchValueByKey( $result['meta_data'], 'woo_ua_longitude_current', 0),
-									'condition' => searchValueByKey( $result['meta_data'], 'woo_ua_product_condition', 'new'),
-									'openPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0),
-									'currentPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bid', searchValueByKey( $result['meta_data'], 'woo_ua_opening_price', 0) ),
-									'currentBider' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_current_bider', 0),
-									'bidCount' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_bid_count', 0),
-									'lowestPrice' => searchValueByKey( $result['meta_data'], 'woo_ua_lowest_price', 0),
-									'typeChange' => searchValueByKey( $result['meta_data'], 'woo_ua_type_auction_increment', 'down'),
-									'stepChange' => searchValueByKey( $result['meta_data'], 'woo_ua_bid_increment', ''),
-									'endDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_end_date', ''),
-									'startDate' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_start_date', ''),
-									'started' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_has_started', '0', true),
-									'closed' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_closed', '0', true),
-									'lastActivity' => searchValueByKey( $result['meta_data'], 'woo_ua_auction_last_activity', '0'),
-								];
-								return self::filter_auctions( [$auctions] );
-							}catch(Exception $error){
-								return [];
-							}
+							return self::filter_auctions( UWA_AJAX::endpoint_get_auction($request['id']) );
 						},
 					) );
 				}
