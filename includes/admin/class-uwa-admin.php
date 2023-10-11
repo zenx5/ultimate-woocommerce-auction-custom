@@ -295,7 +295,6 @@ class UWA_Admin
 			<script src="<?=WOO_UA_ASSETS_URL . 'js/location.js'?>"></script>
 			<div id="map" style="width: 600px; height: 230px;margin: auto;"></div>
 			<script src="https://maps.googleapis.com/maps/api/js?key=<?=get_option('uwa_google_map_api_key', '')?>&callback=initMap&v=weekly" defer></script>
-			<!-- AIzaSyC0ECOlC8qO275G9I6J0xu9tFNzxrJpb2U -->
 		</div>
 
 		<div id='auction_options' class='panel woocommerce_options_panel'>
